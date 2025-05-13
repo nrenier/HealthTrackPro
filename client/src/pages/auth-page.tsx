@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth, LoginData, RegisterData } from "@/hooks/use-auth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,11 +39,8 @@ export default function AuthPage() {
   const [_, navigate] = useLocation();
   const { user, loginMutation, registerMutation } = useAuth();
 
-  // Redirect if already logged in
-  if (user) {
-    navigate("/");
-    return null;
-  }
+  // Prepare redirection state
+  const shouldRedirect = !!user;
 
   const loginForm = useForm<LoginData>({
     resolver: zodResolver(loginSchema),
@@ -70,6 +67,13 @@ export default function AuthPage() {
   const onRegisterSubmit = (data: RegisterData) => {
     registerMutation.mutate(data);
   };
+
+  // Handle redirection after all hook calls
+  useEffect(() => {
+    if (shouldRedirect) {
+      navigate("/");
+    }
+  }, [shouldRedirect, navigate]);
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-background">
@@ -126,7 +130,7 @@ export default function AuthPage() {
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Input placeholder="Display Name (optional)" {...field} />
+                              <Input placeholder="Display Name (optional)" {...field} value={field.value || ""} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
