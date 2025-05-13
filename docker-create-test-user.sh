@@ -6,7 +6,7 @@ HASH_PASSWORD="8115c008fdaab4fe909d8de3246cecc7f5e4a0e56dc6d5c57220a738b0594b07.
 
 echo "Creazione utente di test..."
 
-docker-compose exec postgres psql -U endouser -d endodiary <<-EOSQL
+docker compose exec postgres psql -U endouser -d endodiary <<-EOSQL
   INSERT INTO users (username, password, email, display_name)
   VALUES ('testuser', '$HASH_PASSWORD', 'test@example.com', 'Test User')
   ON CONFLICT (username) DO NOTHING;

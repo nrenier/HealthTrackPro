@@ -2,7 +2,7 @@
 
 # Avvia i container Docker
 echo "Starting Docker containers..."
-docker-compose up -d
+docker compose up -d
 
 # Attendi che PostgreSQL sia pronto
 echo "Waiting for PostgreSQL to be ready..."
