@@ -31,7 +31,7 @@ export default function PainTracker({
   const painTypes = [
     { id: "abdominal", label: "Dolore parte bassa addome" },
     { id: "pelvic", label: "Dolore pelvico" },
-    { id: "dysmenorrhea", label: "Dismenorrea, Stipsi" },
+    { id: "dysmenorrhea", label: "Dischezia, Stipsi" },
     { id: "defecation", label: "Dolore durante defecazione" },
     { id: "urination", label: "Dolore durante emissione urina" },
     { id: "sexualIntercourse", label: "Dolore durante rapporto sessuale" },
@@ -52,32 +52,43 @@ export default function PainTracker({
         const value = getPainValue(pain.id);
         
         return (
-          <div key={pain.id} className="mb-4">
-            <div className="flex justify-between mb-1">
-              <Label htmlFor={`pain-${pain.id}`} className="text-sm text-neutral-700">
-                {pain.label}
-              </Label>
-              <span className={cn(
-                "text-sm font-medium",
-                value > 0 ? "text-primary" : "text-muted-foreground"
-              )}>
+          <div key={pain.id} className="mb-6">
+            <Label htmlFor={`pain-${pain.id}`} className="text-sm text-neutral-700 mb-1 block">
+              {pain.label}
+              <span className="float-right font-medium text-primary">
                 {value}
               </span>
-            </div>
-            <div className="relative">
+            </Label>
+            <div className="mt-2">
+              <div className="flex justify-between mb-1">
+                {Array.from({ length: 11 }, (_, i) => (
+                  <div 
+                    key={i} 
+                    className={cn(
+                      "flex flex-col items-center",
+                      value === i ? "text-primary" : "text-muted-foreground"
+                    )}
+                  >
+                    <span 
+                      className={cn(
+                        "w-6 h-6 rounded-full text-[10px] flex items-center justify-center", 
+                        value === i ? "bg-primary/20 text-primary font-medium" : "bg-neutral-100"
+                      )}
+                    >
+                      {i}
+                    </span>
+                  </div>
+                ))}
+              </div>
               <Slider
                 id={`pain-${pain.id}`}
-                defaultValue={[value]}
+                value={[value]}
                 min={0}
                 max={10}
                 step={1}
                 onValueChange={(values) => onPainChange(pain.id, values[0])}
+                className="mt-1"
               />
-              <div className="absolute top-3 left-0 right-0 flex justify-between px-1 text-[10px] text-muted-foreground">
-                {Array.from({ length: 10 }, (_, i) => (
-                  <span key={i + 1}>{i + 1}</span>
-                ))}
-              </div>
             </div>
           </div>
         );

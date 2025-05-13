@@ -94,7 +94,13 @@ export default function SymptomPage() {
           p.location === location ? { ...p, intensity } : p
         );
       } else {
-        return [...prev, { id: Math.random(), location, intensity, diaryEntryId: entryData?.id || 0, createdAt: new Date() }];
+        return [...prev, { 
+          id: Math.random(), 
+          location, 
+          intensity, 
+          diaryEntryId: entryData?.id || 0, 
+          createdAt: new Date() 
+        }];
       }
     });
   };

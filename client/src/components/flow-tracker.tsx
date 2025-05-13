@@ -29,7 +29,7 @@ export default function FlowTracker({ value, onChange }: FlowTrackerProps) {
               className={cn(
                 "px-3 py-2 rounded-full text-sm font-medium flex items-center",
                 isSelected 
-                  ? "bg-primary bg-opacity-10 text-primary border border-primary" 
+                  ? "bg-primary/10 text-primary border border-primary" 
                   : "bg-white border border-neutral-300 text-muted-foreground"
               )}
               onClick={() => onChange(flow.id)}
