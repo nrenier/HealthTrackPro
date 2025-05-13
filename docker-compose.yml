@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    container_name: endodiary-postgres
+    environment:
+      POSTGRES_USER: endouser
+      POSTGRES_PASSWORD: endopass
+      POSTGRES_DB: endodiary
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - endodiary-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U endouser -d endodiary"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: endodiary-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@endodiary.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - endodiary-network
+    restart: unless-stopped
+    
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: endodiary-app
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgres://endouser:endopass@postgres:5432/endodiary
+      PGUSER: endouser
+      PGHOST: postgres
+      PGPASSWORD: endopass
+      PGDATABASE: endodiary
+      PGPORT: 5432
+      SESSION_SECRET: endodiary_dev_secret
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+    networks:
+      - endodiary-network
+    restart: unless-stopped
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+networks:
+  endodiary-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
