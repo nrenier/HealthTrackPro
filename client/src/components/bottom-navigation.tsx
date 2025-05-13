@@ -26,8 +26,8 @@ export default function BottomNavigation() {
           <BarChart />
         </button>
         <button 
-          className="p-3 text-muted-foreground"
-          onClick={() => {}}
+          className={`p-3 ${location.includes("/account") ? "text-primary" : "text-muted-foreground"}`}
+          onClick={() => navigate("/account")}
         >
           <User />
         </button>
