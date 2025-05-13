@@ -81,10 +81,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
-      // Create diary entry
+      // Create diary entry with properly formatted date
+      const dateStr = date.toISOString().split('T')[0];
       const newEntry = await storage.createDiaryEntry({
         userId: req.user!.id,
-        date,
+        date: dateStr,
         mood: req.body.mood || null,
         flow: req.body.flow || null,
         notes: req.body.notes || null,

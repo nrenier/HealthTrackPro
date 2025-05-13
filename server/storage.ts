@@ -49,11 +49,11 @@ export interface IStorage {
   updateBloodPresence(id: number, presence: Partial<InsertBloodPresence>): Promise<BloodPresence | undefined>;
   
   // Session store
-  sessionStore: session.SessionStore;
+  sessionStore: any; // Using any type to avoid TypeScript errors
 }
 
 export class DatabaseStorage implements IStorage {
-  sessionStore: session.SessionStore;
+  sessionStore: any; // Use any to avoid TypeScript errors
 
   constructor() {
     this.sessionStore = new PostgresSessionStore({
@@ -116,13 +116,16 @@ export class DatabaseStorage implements IStorage {
     const formattedDate = new Date(date);
     formattedDate.setUTCHours(0, 0, 0, 0);
     
+    // Format the date as ISO string (yyyy-mm-dd) for proper comparison
+    const dateStr = formattedDate.toISOString().split('T')[0];
+    
     const [entry] = await db
       .select()
       .from(diaryEntries)
       .where(
         and(
           eq(diaryEntries.userId, userId),
-          eq(diaryEntries.date, formattedDate)
+          eq(diaryEntries.date, dateStr)
         )
       );
     
