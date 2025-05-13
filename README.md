@@ -30,6 +30,27 @@ Un'applicazione per il tracciamento di sintomi, flusso mestruale e livelli di do
 Questo avvierà:
 - Un container PostgreSQL esposto sulla porta 5432
 - Un container pgAdmin4 accessibile su http://localhost:5050
+- L'applicazione EndoDiary accessibile su http://localhost:5000
+
+### Reinizializzazione del database
+
+Se desideri reinizializzare completamente il database eliminando tutti i dati:
+
+```bash
+./docker-database-reset.sh
+```
+
+### Creazione utente di test
+
+Per creare un utente di test con cui effettuare il login:
+
+```bash
+./docker-create-test-user.sh
+```
+
+Questo crea un utente con le credenziali:
+- Username: testuser
+- Password: password123
 
 ## Avvio manuale
 
