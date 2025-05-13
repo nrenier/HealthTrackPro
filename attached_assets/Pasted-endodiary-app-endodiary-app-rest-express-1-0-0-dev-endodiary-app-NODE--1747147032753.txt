@@ -1,0 +1,121 @@
+endodiary-app       |
+endodiary-app       | > rest-express@1.0.0 dev
+endodiary-app       | > NODE_ENV=development tsx server/index.ts
+endodiary-app       |
+endodiary-app       | /app/server/db.ts:1
+endodiary-app       | import { Pool } from 'pg';
+endodiary-app       |          ^
+endodiary-app       |
+endodiary-app       | SyntaxError: The requested module 'pg' does not provide an export named 'Pool'
+endodiary-app       |     at ModuleJob._instantiate (node:internal/modules/esm/module_job:175:21)
+endodiary-app       |     at async ModuleJob.run (node:internal/modules/esm/module_job:258:5)
+endodiary-app       |     at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+endodiary-app       |     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+endodiary-app       |
+endodiary-app       | Node.js v20.19.1
+endodiary-app       |
+endodiary-app       | > rest-express@1.0.0 dev
+endodiary-app       | > NODE_ENV=development tsx server/index.ts
+endodiary-app       |
+endodiary-app       | /app/server/db.ts:1
+endodiary-app       | import { Pool } from 'pg';
+endodiary-app       |          ^
+endodiary-app       |
+endodiary-app       | SyntaxError: The requested module 'pg' does not provide an export named 'Pool'
+endodiary-app       |     at ModuleJob._instantiate (node:internal/modules/esm/module_job:175:21)
+endodiary-app       |     at async ModuleJob.run (node:internal/modules/esm/module_job:258:5)
+endodiary-app       |     at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+endodiary-app       |     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+endodiary-app       |
+endodiary-app       | Node.js v20.19.1
+endodiary-app       |
+endodiary-app       | > rest-express@1.0.0 dev
+endodiary-app       | > NODE_ENV=development tsx server/index.ts
+endodiary-app       |
+endodiary-app       | /app/server/db.ts:1
+endodiary-app       | import { Pool } from 'pg';
+endodiary-app       |          ^
+endodiary-app       |
+endodiary-app       | SyntaxError: The requested module 'pg' does not provide an export named 'Pool'
+endodiary-app       |     at ModuleJob._instantiate (node:internal/modules/esm/module_job:175:21)
+endodiary-app       |     at async ModuleJob.run (node:internal/modules/esm/module_job:258:5)
+endodiary-app       |     at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+endodiary-app       |     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+endodiary-app       |
+endodiary-app       | Node.js v20.19.1
+endodiary-app       |
+endodiary-app       | > rest-express@1.0.0 dev
+endodiary-app       | > NODE_ENV=development tsx server/index.ts
+endodiary-app       |
+endodiary-app       | /app/server/db.ts:1
+endodiary-app       | import { Pool } from 'pg';
+endodiary-app       |          ^
+endodiary-app       |
+endodiary-app       | SyntaxError: The requested module 'pg' does not provide an export named 'Pool'
+endodiary-app       |     at ModuleJob._instantiate (node:internal/modules/esm/module_job:175:21)
+endodiary-app       |     at async ModuleJob.run (node:internal/modules/esm/module_job:258:5)
+endodiary-app       |     at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+endodiary-app       |     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+endodiary-app       |
+endodiary-app       | Node.js v20.19.1
+endodiary-app       |
+endodiary-app       | > rest-express@1.0.0 dev
+endodiary-app       | > NODE_ENV=development tsx server/index.ts
+endodiary-app       |
+endodiary-app       | /app/server/db.ts:1
+endodiary-app       | import { Pool } from 'pg';
+endodiary-app       |          ^
+endodiary-app       |
+endodiary-app       | SyntaxError: The requested module 'pg' does not provide an export named 'Pool'
+endodiary-app       |     at ModuleJob._instantiate (node:internal/modules/esm/module_job:175:21)
+endodiary-app       |     at async ModuleJob.run (node:internal/modules/esm/module_job:258:5)
+endodiary-app       |     at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+endodiary-app       |     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+endodiary-app       |
+endodiary-app       | Node.js v20.19.1
+endodiary-app       |
+endodiary-app       | > rest-express@1.0.0 dev
+endodiary-app       | > NODE_ENV=development tsx server/index.ts
+endodiary-app       |
+endodiary-app       | /app/server/db.ts:1
+endodiary-app       | import { Pool } from 'pg';
+endodiary-app       |          ^
+endodiary-app       |
+endodiary-app       | SyntaxError: The requested module 'pg' does not provide an export named 'Pool'
+endodiary-app       |     at ModuleJob._instantiate (node:internal/modules/esm/module_job:175:21)
+endodiary-app       |     at async ModuleJob.run (node:internal/modules/esm/module_job:258:5)
+endodiary-app       |     at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+endodiary-app       |     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+endodiary-app       |
+endodiary-app       | Node.js v20.19.1
+endodiary-app       |
+endodiary-app       | > rest-express@1.0.0 dev
+endodiary-app       | > NODE_ENV=development tsx server/index.ts
+endodiary-app       |
+endodiary-app       | /app/server/db.ts:1
+endodiary-app       | import { Pool } from 'pg';
+endodiary-app       |          ^
+endodiary-app       |
+endodiary-app       | SyntaxError: The requested module 'pg' does not provide an export named 'Pool'
+endodiary-app       |     at ModuleJob._instantiate (node:internal/modules/esm/module_job:175:21)
+endodiary-app       |     at async ModuleJob.run (node:internal/modules/esm/module_job:258:5)
+endodiary-app       |     at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+endodiary-app       |     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+endodiary-app       |
+endodiary-app       | Node.js v20.19.1
+endodiary-app       |
+endodiary-app       | > rest-express@1.0.0 dev
+endodiary-app       | > NODE_ENV=development tsx server/index.ts
+endodiary-app       |
+endodiary-app       | /app/server/db.ts:1
+endodiary-app       | import { Pool } from 'pg';
+endodiary-app       |          ^
+endodiary-app       |
+endodiary-app       | SyntaxError: The requested module 'pg' does not provide an export named 'Pool'
+endodiary-app       |     at ModuleJob._instantiate (node:internal/modules/esm/module_job:175:21)
+endodiary-app       |     at async ModuleJob.run (node:internal/modules/esm/module_job:258:5)
+endodiary-app       |     at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+endodiary-app       |     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+endodiary-app       |
+endodiary-app       | Node.js v20.19.1
+endodiary-app exited with code 1
