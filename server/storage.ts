@@ -16,10 +16,10 @@ import {
 import { db } from "./db";
 import { eq, and, desc } from "drizzle-orm";
 import session from "express-session";
-import connectPg from "connect-pg-simple";
+import PgSession from "connect-pg-simple";
 import { pool } from "./db";
 
-const PostgresSessionStore = connectPg(session);
+const PostgresSessionStore = PgSession(session);
 
 export interface IStorage {
   // User operations
