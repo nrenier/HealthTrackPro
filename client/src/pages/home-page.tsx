@@ -1,13 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 
 export default function HomePage() {
   const [_, navigate] = useLocation();
+  const [isRedirecting, setIsRedirecting] = useState(true);
 
   useEffect(() => {
     // Redirect to calendar page as the main page
-    navigate("/calendar");
-  }, [navigate]);
+    if (isRedirecting) {
+      navigate("/calendar");
+    }
+  }, [isRedirecting, navigate]);
 
   return (
     <div className="flex items-center justify-center h-screen">

@@ -16,7 +16,7 @@ function Router() {
     <Switch>
       <ProtectedRoute path="/" component={HomePage} />
       <ProtectedRoute path="/calendar" component={CalendarPage} />
-      <ProtectedRoute path="/symptom/:date" component={() => <SymptomPage />} />
+      <ProtectedRoute path="/symptom/:date" component={SymptomPage} />
       <Route path="/auth" component={AuthPage} />
       <Route component={NotFound} />
     </Switch>

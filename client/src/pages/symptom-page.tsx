@@ -25,11 +25,14 @@ export default function SymptomPage() {
   // Validate date format
   const parsedDate = params.date ? new Date(params.date) : new Date();
   const isValidDate = !isNaN(parsedDate.getTime());
+  const [shouldRedirect, setShouldRedirect] = useState(!isValidDate);
   
-  if (!isValidDate) {
-    navigate("/calendar");
-    return null;
-  }
+  // Handle redirection if invalid date
+  useEffect(() => {
+    if (shouldRedirect) {
+      navigate("/calendar");
+    }
+  }, [shouldRedirect, navigate]);
   
   const formattedDate = format(parsedDate, "yyyy-MM-dd");
   const displayDate = format(parsedDate, "d MMMM");
@@ -45,25 +48,26 @@ export default function SymptomPage() {
   });
   
   // Fetch diary entry if exists
-  const { data: entryData, isLoading } = useQuery<DiaryEntryWithDetails>({
+  const { data: entryData, isLoading, error: queryError } = useQuery<DiaryEntryWithDetails>({
     queryKey: [`/api/diary/${formattedDate}`],
     enabled: !!user,
     retry: (failureCount, error: any) => {
       // Don't retry on 404 (no entry yet)
       if (error?.status === 404) return false;
       return failureCount < 3;
-    },
-    onError: (error: any) => {
-      // Ignore 404 errors (no entry yet)
-      if (error?.status !== 404) {
-        toast({
-          title: "Error",
-          description: "Failed to load diary entry",
-          variant: "destructive",
-        });
-      }
     }
   });
+  
+  // Handle query error
+  useEffect(() => {
+    if (queryError && (queryError as any).status !== 404) {
+      toast({
+        title: "Error",
+        description: "Failed to load diary entry",
+        variant: "destructive",
+      });
+    }
+  }, [queryError, toast]);
   
   // Set form state from fetched data
   useEffect(() => {
