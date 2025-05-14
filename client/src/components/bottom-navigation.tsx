@@ -1,4 +1,4 @@
-import { Home, Search, BarChart, User } from "lucide-react";
+import { Home, Stethoscope, BarChart, User } from "lucide-react";
 import { useLocation } from "wouter";
 
 export default function BottomNavigation() {
@@ -14,10 +14,10 @@ export default function BottomNavigation() {
           <Home />
         </button>
         <button 
-          className="p-3 text-muted-foreground"
-          onClick={() => {}}
+          className={`p-3 ${location.includes("/medical-info") ? "text-primary" : "text-muted-foreground"}`}
+          onClick={() => navigate("/medical-info")}
         >
-          <Search />
+          <Stethoscope />
         </button>
         <button 
           className="p-3 text-muted-foreground"

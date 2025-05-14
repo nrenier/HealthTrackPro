@@ -5,6 +5,7 @@ import {
   type InsertUser, 
   type DiaryEntry,
   type InsertDiaryEntry,
+  medicalInfo,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, and, desc } from "drizzle-orm";
@@ -93,12 +94,81 @@ export class Storage {
     return entry;
   }
 
-  async getDiaryEntriesByUserId(userId: number): Promise<DiaryEntry[]> {
-    return await db
-      .select()
-      .from(diaryEntries)
-      .where(eq(diaryEntries.userId, userId))
-      .orderBy(desc(diaryEntries.date));
+  // Fetch all entries for a specific user
+  async getDiaryEntriesByUserId(userId: number) {
+    try {
+      return await db
+        .select()
+        .from(diaryEntries)
+        .where(eq(diaryEntries.userId, userId))
+        .orderBy(desc(diaryEntries.date));
+    } catch (err) {
+      console.error("Error fetching diary entries by user ID:", err);
+      throw new Error("Failed to fetch diary entries");
+    }
+  }
+
+  // Medical Info Operations
+  async getMedicalInfoByUserId(userId: number) {
+    try {
+      const results = await db
+        .select()
+        .from(medicalInfo)
+        .where(eq(medicalInfo.userId, userId))
+        .limit(1);
+
+      return results.length > 0 ? results[0] : null;
+    } catch (err) {
+      console.error("Error fetching medical info by user ID:", err);
+      throw new Error("Failed to fetch medical info");
+    }
+  }
+
+  async createMedicalInfo(data: any) {
+    try {
+      const insertedIds = await db
+        .insert(medicalInfo)
+        .values(data)
+        .returning({ id: medicalInfo.id });
+
+      if (insertedIds.length === 0) {
+        throw new Error("Failed to insert medical info");
+      }
+
+      return await this.getMedicalInfoById(insertedIds[0].id);
+    } catch (err) {
+      console.error("Error creating medical info:", err);
+      throw new Error("Failed to create medical info");
+    }
+  }
+
+  async getMedicalInfoById(id: number) {
+    try {
+      const results = await db
+        .select()
+        .from(medicalInfo)
+        .where(eq(medicalInfo.id, id))
+        .limit(1);
+
+      return results.length > 0 ? results[0] : null;
+    } catch (err) {
+      console.error("Error fetching medical info by ID:", err);
+      throw new Error("Failed to fetch medical info");
+    }
+  }
+
+  async updateMedicalInfo(id: number, data: any) {
+    try {
+      await db
+        .update(medicalInfo)
+        .set(data)
+        .where(eq(medicalInfo.id, id));
+
+      return await this.getMedicalInfoById(id);
+    } catch (err) {
+      console.error("Error updating medical info:", err);
+      throw new Error("Failed to update medical info");
+    }
   }
 
   // Session store

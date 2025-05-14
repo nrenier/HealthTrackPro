@@ -215,6 +215,78 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Medical Info Routes
+  app.get("/api/medical-info", isAuthenticated, async (req, res, next) => {
+    try {
+      const info = await storage.getMedicalInfoByUserId(req.user!.id);
+      
+      if (!info) {
+        return res.status(404).json({ message: "No medical info found" });
+      }
+      
+      res.json(info);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.post("/api/medical-info", isAuthenticated, async (req, res, next) => {
+    try {
+      // Verifica se l'utente ha già un record delle informazioni mediche
+      const existingInfo = await storage.getMedicalInfoByUserId(req.user!.id);
+
+      if (existingInfo) {
+        return res.status(409).json({ 
+          message: "Medical info already exists for this user",
+          info: existingInfo
+        });
+      }
+
+      // Crea una nuova voce di informazioni mediche
+      const newInfo = await storage.createMedicalInfo({
+        userId: req.user!.id,
+        endometriosisSurgery: req.body.endometriosisSurgery || false,
+        appendectomy: req.body.appendectomy || false,
+        infertility: req.body.infertility || false,
+        endometriomaPreOpEcography: req.body.endometriomaPreOpEcography || false,
+        endometriomaLocation: req.body.endometriomaLocation || "unilateral",
+        endometriomaMaxDiameter: req.body.endometriomaMaxDiameter || null,
+        ca125Value: req.body.ca125Value || null
+      });
+
+      res.status(201).json(newInfo);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.put("/api/medical-info", isAuthenticated, async (req, res, next) => {
+    try {
+      // Trova le informazioni mediche esistenti
+      const existingInfo = await storage.getMedicalInfoByUserId(req.user!.id);
+
+      if (!existingInfo) {
+        return res.status(404).json({ message: "No medical info found for this user" });
+      }
+
+      // Aggiorna le informazioni mediche
+      const updatedInfo = await storage.updateMedicalInfo(existingInfo.id, {
+        endometriosisSurgery: req.body.endometriosisSurgery !== undefined ? req.body.endometriosisSurgery : existingInfo.endometriosisSurgery,
+        appendectomy: req.body.appendectomy !== undefined ? req.body.appendectomy : existingInfo.appendectomy,
+        infertility: req.body.infertility !== undefined ? req.body.infertility : existingInfo.infertility,
+        endometriomaPreOpEcography: req.body.endometriomaPreOpEcography !== undefined ? req.body.endometriomaPreOpEcography : existingInfo.endometriomaPreOpEcography,
+        endometriomaLocation: req.body.endometriomaLocation !== undefined ? req.body.endometriomaLocation : existingInfo.endometriomaLocation,
+        endometriomaMaxDiameter: req.body.endometriomaMaxDiameter !== undefined ? req.body.endometriomaMaxDiameter : existingInfo.endometriomaMaxDiameter,
+        ca125Value: req.body.ca125Value !== undefined ? req.body.ca125Value : existingInfo.ca125Value,
+        updatedAt: new Date()
+      });
+
+      res.json(updatedInfo);
+    } catch (error) {
+      next(error);
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

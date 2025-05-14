@@ -13,6 +13,7 @@ import CalendarPage from "@/pages/calendar-page";
 import SymptomPage from "@/pages/symptom-page";
 import AccountPage from "@/pages/account-page";
 import NotFoundPage from "@/pages/not-found";
+import MedicalInfoPage from "@/pages/medical-info-page"; // Import MedicalInfoPage
 
 export default function App() {
   return (
@@ -32,6 +33,16 @@ export default function App() {
                 <SymptomPage />
               </ProtectedRoute>
             </Route>
+            <Route path="/calendar/:date">
+              <SymptomPage />
+            </Route>
+
+            <Route path="/medical-info">
+              <ProtectedRoute>
+                <MedicalInfoPage />
+              </ProtectedRoute>
+            </Route>
+
             <Route path="/account">
               <ProtectedRoute>
                 <AccountPage />

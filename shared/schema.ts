@@ -53,14 +53,37 @@ export const diaryEntries = pgTable("diary_entries", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+// Tabella informazioni mediche
+export const medicalInfo = pgTable("medical_info", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  endometriosisSurgery: boolean("endometriosis_surgery").default(false),
+  appendectomy: boolean("appendectomy").default(false),
+  infertility: boolean("infertility").default(false),
+  endometriomaPreOpEcography: boolean("endometrioma_pre_op_ecography").default(false),
+  endometriomaLocation: text("endometrioma_location").default("unilateral"),
+  endometriomaMaxDiameter: integer("endometrioma_max_diameter"),
+  ca125Value: integer("ca125_value"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 // Relations
-export const userRelations = relations(users, ({ many }) => ({
+export const userRelations = relations(users, ({ many, one }) => ({
   diaryEntries: many(diaryEntries),
+  medicalInfo: one(medicalInfo),
 }));
 
 export const diaryEntryRelations = relations(diaryEntries, ({ one }) => ({
   user: one(users, {
     fields: [diaryEntries.userId],
+    references: [users.id],
+  }),
+}));
+
+export const medicalInfoRelations = relations(medicalInfo, ({ one }) => ({
+  user: one(users, {
+    fields: [medicalInfo.userId],
     references: [users.id],
   }),
 }));
