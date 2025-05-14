@@ -9,6 +9,7 @@ async function throwIfResNotOk(res: Response) {
 
 export const apiRequest = (method: string, endpoint: string, data?: any) => {
   const url = `${import.meta.env.VITE_API_BASE_URL || ''}${endpoint}`;
+  console.log(`API Request: ${method} ${url}`);
 
   return fetch(url, {
     method,
@@ -19,6 +20,7 @@ export const apiRequest = (method: string, endpoint: string, data?: any) => {
     body: data ? JSON.stringify(data) : undefined,
   }).then(res => {
     if (!res.ok) {
+      console.error(`API error: ${res.status} ${res.statusText}`);
       const error: any = new Error(`API request failed: ${res.statusText}`);
       error.status = res.status;
       throw error;
@@ -34,26 +36,40 @@ export const getQueryFn: <T>(options: {
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
     try {
-      const res = await fetch(queryKey[0] as string, {
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
+      const url = `${baseUrl}${queryKey[0]}`;
+      console.log(`Query: GET ${url}`);
+      
+      const res = await fetch(url, {
         credentials: "include",
       });
 
+      // Gestisci risposte speciali
       if (unauthorizedBehavior === "returnNull" && res.status === 401) {
+        return null;
+      }
+      
+      // 404 per ricerche di date è un caso normale
+      if (res.status === 404 && url.includes('/api/diary/')) {
+        console.log('Diary entry not found, returning null');
         return null;
       }
 
       if (!res.ok) {
+        console.error(`Query error: ${res.status} ${res.statusText} for ${url}`);
         const error: any = new Error(`API request failed: ${res.statusText}`);
         error.status = res.status;
         throw error;
       }
 
-      return await res.json();
+      const data = await res.json();
+      return data;
     } catch (err: any) {
       // Gestisci e propaghi l'errore con informazioni aggiuntive
       if (!err.status && err.message) {
         err.status = 500;
       }
+      console.error('Query execution error:', err);
       throw err;
     }
   };

@@ -54,13 +54,23 @@ export default function SymptomPage() {
   const [medicines, setMedicines] = useState<Medicine[]>([]);
 
   // Fetch diary entry if exists
-  const { data: entryData, isLoading, error: queryError } = useQuery<DiaryEntryWithDetails>({
+  const { data: entryData, isLoading, error: queryError } = useQuery<DiaryEntryWithDetails | null>({
     queryKey: [`/api/diary/${formattedDate}`],
     enabled: !!user,
-    retry: false, // Non riprovare per nessun errore
+    retry: 0,
+    retryOnMount: false,
+    retryOnReconnect: false,
+    staleTime: 30000, // 30 secondi
+    refetchOnWindowFocus: false,
     onError: (error: any) => {
-      // Non mostrare errori per 404, è un caso normale per nuove date
+      // Per i 404 restituisci null (data nuova, è normale)
+      if (error.status === 404) {
+        return null;
+      }
+      
+      // Altri errori
       if (error.status !== 404) {
+        console.error("Diary query error:", error);
         toast({
           title: "Errore",
           description: "Impossibile caricare i dati del diario",
@@ -135,41 +145,65 @@ export default function SymptomPage() {
         medicines
       };
 
+      // Utilizziamo POST come predefinito per creare nuovi record
+      let method = "POST";
+      let endpoint = "/api/diary";
+      
+      // Verifica se l'entry esiste già
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
       try {
-        // Prima verifica se esiste già un record (entryData potrebbe non essere aggiornato)
-        let exists = false;
+        const checkRes = await fetch(`${baseUrl}/api/diary/${formattedDate}`, {
+          credentials: 'include',
+          method: 'GET'
+        });
         
-        if (entryData) {
-          exists = true;
-        } else {
-          // Verifica manualmente se esiste un record
-          try {
-            const checkRes = await fetch(`${import.meta.env.VITE_API_BASE_URL || ''}/api/diary/${formattedDate}`, {
-              credentials: 'include'
+        // Se la richiesta ha successo, l'entry esiste e dobbiamo fare un PUT invece
+        if (checkRes.ok) {
+          method = "PUT";
+          endpoint = `/api/diary/${formattedDate}`;
+        }
+      } catch (e) {
+        console.error("Error checking entry existence:", e);
+        // In caso di errore, continuiamo con POST per sicurezza
+      }
+      
+      try {
+        console.log(`Submitting with ${method} to ${endpoint}`);
+        const res = await fetch(`${baseUrl}${endpoint}`, {
+          method,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify(payload)
+        });
+        
+        if (!res.ok) {
+          // Se otteniamo un 409 (conflitto - record esiste già), proviamo con PUT
+          if (res.status === 409 && method === "POST") {
+            console.log("Entry already exists, switching to PUT");
+            const putRes = await fetch(`${baseUrl}/api/diary/${formattedDate}`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              credentials: 'include',
+              body: JSON.stringify(payload)
             });
-            exists = checkRes.ok;
-          } catch (e) {
-            // Se la verifica fallisce, assume che non esista
-            exists = false;
+            
+            if (!putRes.ok) {
+              throw new Error(`API PUT request failed: ${putRes.statusText}`);
+            }
+            
+            return await putRes.json();
           }
+          
+          throw new Error(`API request failed: ${res.statusText}`);
         }
-
-        if (exists) {
-          // Update existing entry
-          const res = await apiRequest("PUT", `/api/diary/${formattedDate}`, payload);
-          return await res.json();
-        } else {
-          // Create new entry
-          const res = await apiRequest("POST", "/api/diary", payload);
-          return await res.json();
-        }
+        
+        return await res.json();
       } catch (error: any) {
-        // Gestione dell'errore 409 (record già esistente)
-        if (error.status === 409) {
-          // Se il record esiste già, fai un update
-          const res = await apiRequest("PUT", `/api/diary/${formattedDate}`, payload);
-          return await res.json();
-        }
+        console.error("Save mutation error:", error);
         throw error;
       }
     },

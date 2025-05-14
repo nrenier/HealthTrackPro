@@ -1,41 +1,47 @@
 import { Switch, Route } from "wouter";
-import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "@/lib/queryClient";
+import { AuthProvider } from "@/hooks/use-auth";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/not-found";
-import AuthPage from "@/pages/auth-page";
+import ProtectedRoute from "@/lib/protected-route";
+
+// Pages
 import HomePage from "@/pages/home-page";
+import AuthPage from "@/pages/auth-page";
 import CalendarPage from "@/pages/calendar-page";
 import SymptomPage from "@/pages/symptom-page";
 import AccountPage from "@/pages/account-page";
-import { ProtectedRoute } from "./lib/protected-route";
-import { AuthProvider } from "./hooks/use-auth";
+import NotFoundPage from "@/pages/not-found";
 
-function Router() {
-  return (
-    <Switch>
-      <ProtectedRoute path="/" component={HomePage} />
-      <ProtectedRoute path="/calendar" component={CalendarPage} />
-      <ProtectedRoute path="/symptom/:date" component={SymptomPage} />
-      <ProtectedRoute path="/account" component={AccountPage} />
-      <Route path="/auth" component={AuthPage} />
-      <Route component={NotFound} />
-    </Switch>
-  );
-}
-
-function App() {
+export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <TooltipProvider>
+      <TooltipProvider>
+        <AuthProvider>
+          <Switch>
+            <Route path="/" component={HomePage} />
+            <Route path="/auth" component={AuthPage} />
+            <Route path="/calendar">
+              <ProtectedRoute>
+                <CalendarPage />
+              </ProtectedRoute>
+            </Route>
+            <Route path="/symptom/:date">
+              <ProtectedRoute>
+                <SymptomPage />
+              </ProtectedRoute>
+            </Route>
+            <Route path="/account">
+              <ProtectedRoute>
+                <AccountPage />
+              </ProtectedRoute>
+            </Route>
+            <Route component={NotFoundPage} />
+          </Switch>
           <Toaster />
-          <Router />
-        </TooltipProvider>
-      </AuthProvider>
+        </AuthProvider>
+      </TooltipProvider>
     </QueryClientProvider>
   );
 }
-
-export default App;
