@@ -140,8 +140,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
         notes: req.body.notes !== undefined ? req.body.notes : existingEntry.notes,
       });
 
+      // Aggiorna painSymptoms se presenti nella richiesta
+      if (req.body.painSymptoms && Array.isArray(req.body.painSymptoms)) {
+        await storage.updateDiaryEntry(existingEntry.id, {
+          painSymptoms: req.body.painSymptoms.filter(pain => 
+            painLocations.includes(pain.location)
+          )
+        });
+      }
+
+      // Aggiorna bloodPresence se presente nella richiesta
+      if (req.body.bloodPresence) {
+        await storage.updateDiaryEntry(existingEntry.id, {
+          bloodInFeces: !!req.body.bloodPresence.inFeces,
+          bloodInUrine: !!req.body.bloodPresence.inUrine
+        });
+      }
+
+      // Aggiorna dati addizionali se presenti
+      if (req.body.pregnancyTest) {
+        await storage.updateDiaryEntry(existingEntry.id, {
+          pregnancyTest: req.body.pregnancyTest
+        });
+      }
+
+      if (req.body.physicalActivities) {
+        await storage.updateDiaryEntry(existingEntry.id, {
+          physicalActivities: req.body.physicalActivities
+        });
+      }
+
+      if (req.body.medicines) {
+        await storage.updateDiaryEntry(existingEntry.id, {
+          medicines: req.body.medicines
+        });
+      }
+
+      // Ottieni l'entry aggiornato completo
+      const finalEntry = await storage.getDiaryEntryById(existingEntry.id);
+      
       // Return the updated entry
-      res.json(updatedEntry);
+      res.json(finalEntry);
     } catch (error) {
       next(error);
     }
