@@ -75,19 +75,19 @@ export default function SymptomPage() {
     }
   }, [queryError, toast]);
 
-  // Set form state from fetched data
+  // Set form data if entry exists
   useEffect(() => {
     if (entryData) {
       setMood(entryData.mood);
       setFlow(entryData.flow);
       setNotes(entryData.notes);
       setPainSymptoms(entryData.painSymptoms || []);
-      if (entryData.bloodPresence) {
-        setBloodPresence({
-          inFeces: entryData.bloodPresence.inFeces,
-          inUrine: entryData.bloodPresence.inUrine
-        });
-      }
+
+      setBloodPresence({
+        inFeces: entryData.bloodInFeces || false,
+        inUrine: entryData.bloodInUrine || false
+      });
+
       setPregnancyTest(entryData.pregnancyTest || "none");
       setPhysicalActivities(entryData.physicalActivities || ["none"]);
       setMedicines(entryData.medicines || []);

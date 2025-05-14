@@ -1,4 +1,5 @@
-import { pgTable, text, serial, integer, boolean, date, timestamp, pgEnum } from "drizzle-orm/pg-core";
+
+import { pgTable, text, serial, integer, boolean, date, timestamp, pgEnum, jsonb } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 import { relations } from "drizzle-orm";
@@ -19,7 +20,10 @@ export const moodEnum = pgEnum("mood", ["sad", "neutral", "happy"]);
 // Flow enum
 export const flowEnum = pgEnum("flow", ["none", "light", "medium", "heavy", "clots"]);
 
-// Diary entries table
+// Pregnancy test enum
+export const pregnancyTestEnum = pgEnum("pregnancy_test", ["none", "positive", "negative", "unclear"]);
+
+// Unified diary entries table
 export const diaryEntries = pgTable("diary_entries", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
@@ -27,24 +31,25 @@ export const diaryEntries = pgTable("diary_entries", {
   mood: moodEnum("mood"),
   flow: flowEnum("flow"),
   notes: text("notes"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-
-// Pain symptoms table
-export const painSymptoms = pgTable("pain_symptoms", {
-  id: serial("id").primaryKey(),
-  diaryEntryId: integer("diary_entry_id").notNull().references(() => diaryEntries.id, { onDelete: "cascade" }),
-  location: text("location").notNull(),
-  intensity: integer("intensity").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-
-// Blood presence table
-export const bloodPresence = pgTable("blood_presence", {
-  id: serial("id").primaryKey(),
-  diaryEntryId: integer("diary_entry_id").notNull().references(() => diaryEntries.id, { onDelete: "cascade" }),
-  inFeces: boolean("in_feces").default(false).notNull(),
-  inUrine: boolean("in_urine").default(false).notNull(),
+  
+  // Pain symptoms data (stored as JSON)
+  painSymptoms: jsonb("pain_symptoms").$type<Array<{
+    location: string;
+    intensity: number;
+  }>>().default([]),
+  
+  // Blood presence data
+  bloodInFeces: boolean("blood_in_feces").default(false),
+  bloodInUrine: boolean("blood_in_urine").default(false),
+  
+  // Additional info data
+  pregnancyTest: pregnancyTestEnum("pregnancy_test").default("none"),
+  physicalActivities: jsonb("physical_activities").$type<string[]>().default([]),
+  medicines: jsonb("medicines").$type<Array<{
+    name: string;
+    dosage: string;
+  }>>().default([]),
+  
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -53,26 +58,10 @@ export const userRelations = relations(users, ({ many }) => ({
   diaryEntries: many(diaryEntries),
 }));
 
-export const diaryEntryRelations = relations(diaryEntries, ({ one, many }) => ({
+export const diaryEntryRelations = relations(diaryEntries, ({ one }) => ({
   user: one(users, {
     fields: [diaryEntries.userId],
     references: [users.id],
-  }),
-  painSymptoms: many(painSymptoms),
-  bloodPresence: many(bloodPresence),
-}));
-
-export const painSymptomRelations = relations(painSymptoms, ({ one }) => ({
-  diaryEntry: one(diaryEntries, {
-    fields: [painSymptoms.diaryEntryId],
-    references: [diaryEntries.id],
-  }),
-}));
-
-export const bloodPresenceRelations = relations(bloodPresence, ({ one }) => ({
-  diaryEntry: one(diaryEntries, {
-    fields: [bloodPresence.diaryEntryId],
-    references: [diaryEntries.id],
   }),
 }));
 
@@ -87,28 +76,12 @@ export const insertDiaryEntrySchema = createInsertSchema(diaryEntries).omit({
   createdAt: true,
 });
 
-export const insertPainSymptomSchema = createInsertSchema(painSymptoms).omit({
-  id: true,
-  createdAt: true,
-});
-
-export const insertBloodPresenceSchema = createInsertSchema(bloodPresence).omit({
-  id: true,
-  createdAt: true,
-});
-
 // Types
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
 export type InsertDiaryEntry = z.infer<typeof insertDiaryEntrySchema>;
 export type DiaryEntry = typeof diaryEntries.$inferSelect;
-
-export type InsertPainSymptom = z.infer<typeof insertPainSymptomSchema>;
-export type PainSymptom = typeof painSymptoms.$inferSelect;
-
-export type InsertBloodPresence = z.infer<typeof insertBloodPresenceSchema>;
-export type BloodPresence = typeof bloodPresence.$inferSelect;
 
 // Pain location types
 export const painLocations = [
@@ -123,8 +96,26 @@ export const painLocations = [
 
 export type PainLocation = typeof painLocations[number];
 
-// DTO for diary entries with associated data
-export type DiaryEntryWithDetails = DiaryEntry & {
-  painSymptoms: PainSymptom[];
-  bloodPresence: BloodPresence | null;
+// Physical activity types
+export const physicalActivities = [
+  "none", 
+  "yoga", 
+  "walking", 
+  "running", 
+  "swimming", 
+  "cycling", 
+  "gym", 
+  "dance", 
+  "other"
+] as const;
+
+export type PhysicalActivityType = typeof physicalActivities[number];
+
+// Pregnancy test types
+export type PregnancyTestType = "none" | "positive" | "negative" | "unclear";
+
+// Medicine type
+export type Medicine = {
+  name: string;
+  dosage: string;
 };

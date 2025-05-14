@@ -36,17 +36,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const dateStr = req.params.date;
       const date = new Date(dateStr);
-      
+
       if (isNaN(date.getTime())) {
         return res.status(400).json({ message: "Invalid date format" });
       }
-      
+
       const entry = await storage.getDiaryEntryByUserAndDate(req.user!.id, date);
-      
+
       if (!entry) {
         return res.status(404).json({ message: "No entry found for this date" });
       }
-      
+
       res.json(entry);
     } catch (error) {
       next(error);
@@ -60,27 +60,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const date = new Date(val);
         return !isNaN(date.getTime());
       }, { message: "Invalid date format" });
-      
+
       const validationResult = dateValidator.safeParse(req.body.date);
-      
+
       if (!validationResult.success) {
         return res.status(400).json({ message: "Invalid date format" });
       }
-      
+
       // Format date correctly
       const date = new Date(req.body.date);
       date.setUTCHours(0, 0, 0, 0);
-      
+
       // Check if an entry already exists for this date
       const existingEntry = await storage.getDiaryEntryByUserAndDate(req.user!.id, date);
-      
+
       if (existingEntry) {
         return res.status(409).json({ 
           message: "An entry already exists for this date", 
           entry: existingEntry 
         });
       }
-      
+
       // Create diary entry with properly formatted date
       const dateStr = date.toISOString().split('T')[0];
       const newEntry = await storage.createDiaryEntry({
@@ -90,7 +90,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         flow: req.body.flow || null,
         notes: req.body.notes || null,
       });
-      
+
       // Create pain symptoms
       if (req.body.painSymptoms && Array.isArray(req.body.painSymptoms)) {
         for (const pain of req.body.painSymptoms) {
@@ -98,7 +98,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           if (!painLocations.includes(pain.location)) {
             continue;
           }
-          
+
           await storage.createPainSymptom({
             diaryEntryId: newEntry.id,
             location: pain.location,
@@ -106,7 +106,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
         }
       }
-      
+
       // Create blood presence record
       if (req.body.bloodPresence) {
         await storage.createBloodPresence({
@@ -115,7 +115,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           inUrine: !!req.body.bloodPresence.inUrine,
         });
       }
-      
+
       // Get the complete entry with all related data
       const completeEntry = await storage.getDiaryEntryWithDetails(newEntry.id);
       res.status(201).json(completeEntry);
@@ -128,82 +128,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const dateStr = req.params.date;
       const date = new Date(dateStr);
-      
+
       if (isNaN(date.getTime())) {
         return res.status(400).json({ message: "Invalid date format" });
       }
-      
+
       // Find existing entry
       const existingEntry = await storage.getDiaryEntryByUserAndDate(req.user!.id, date);
-      
+
       if (!existingEntry) {
         return res.status(404).json({ message: "No entry found for this date" });
       }
-      
+
       // Update diary entry
       const updatedEntry = await storage.updateDiaryEntry(existingEntry.id, {
         mood: req.body.mood !== undefined ? req.body.mood : existingEntry.mood,
         flow: req.body.flow !== undefined ? req.body.flow : existingEntry.flow,
         notes: req.body.notes !== undefined ? req.body.notes : existingEntry.notes,
       });
-      
-      // Update pain symptoms
-      if (req.body.painSymptoms && Array.isArray(req.body.painSymptoms)) {
-        // Get existing pain symptoms
-        const existingPainSymptoms = await storage.getPainSymptomsByDiaryEntryId(existingEntry.id);
-        const existingPainMap = new Map(existingPainSymptoms.map(pain => [pain.location, pain]));
-        
-        for (const pain of req.body.painSymptoms) {
-          // Validate pain location
-          if (!painLocations.includes(pain.location)) {
-            continue;
-          }
-          
-          const existingPain = existingPainMap.get(pain.location);
-          
-          if (existingPain) {
-            // Update existing pain
-            await storage.updatePainSymptom(existingPain.id, {
-              intensity: pain.intensity,
-            });
-          } else {
-            // Create new pain
-            await storage.createPainSymptom({
-              diaryEntryId: existingEntry.id,
-              location: pain.location,
-              intensity: pain.intensity,
-            });
-          }
-        }
-      }
-      
-      // Update blood presence
-      if (req.body.bloodPresence) {
-        const existingBloodPresence = await storage.getBloodPresenceByDiaryEntryId(existingEntry.id);
-        
-        if (existingBloodPresence) {
-          // Update existing blood presence
-          await storage.updateBloodPresence(existingBloodPresence.id, {
-            inFeces: req.body.bloodPresence.inFeces !== undefined 
-              ? req.body.bloodPresence.inFeces 
-              : existingBloodPresence.inFeces,
-            inUrine: req.body.bloodPresence.inUrine !== undefined 
-              ? req.body.bloodPresence.inUrine 
-              : existingBloodPresence.inUrine,
-          });
-        } else {
-          // Create new blood presence
-          await storage.createBloodPresence({
-            diaryEntryId: existingEntry.id,
-            inFeces: !!req.body.bloodPresence.inFeces,
-            inUrine: !!req.body.bloodPresence.inUrine,
-          });
-        }
-      }
-      
-      // Get updated entry with all related data
-      const completeEntry = await storage.getDiaryEntryWithDetails(existingEntry.id);
-      res.json(completeEntry);
+
+      // Return the updated entry
+      res.json(updatedEntry);
     } catch (error) {
       next(error);
     }
@@ -213,21 +158,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const dateStr = req.params.date;
       const date = new Date(dateStr);
-      
+
       if (isNaN(date.getTime())) {
         return res.status(400).json({ message: "Invalid date format" });
       }
-      
+
       // Find existing entry
       const existingEntry = await storage.getDiaryEntryByUserAndDate(req.user!.id, date);
-      
+
       if (!existingEntry) {
         return res.status(404).json({ message: "No entry found for this date" });
       }
-      
+
       // Delete entry (this will cascade to delete related pain symptoms and blood presence)
       const deleted = await storage.deleteDiaryEntry(existingEntry.id);
-      
+
       if (deleted) {
         res.status(204).send();
       } else {
