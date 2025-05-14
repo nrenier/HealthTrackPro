@@ -65,21 +65,16 @@ export default function PainTracker({
                   <div 
                     key={i} 
                     className={cn(
-                      "flex flex-col items-center",
+                      "flex items-center justify-center",
                       value === i ? "text-primary" : "text-muted-foreground"
                     )}
                   >
-                    <span 
-                      className={cn(
-                        "w-6 h-6 rounded-full text-[10px] flex items-center justify-center", 
-                        value === i ? "bg-primary/20 text-primary font-medium" : "bg-neutral-100"
-                      )}
-                    >
-                      {i}
-                    </span>
-                  <button 
+                    <button
                       onClick={() => onPainChange(pain.id, i)}
-                      className="cursor-pointer"
+                      className={cn(
+                        "w-8 h-8 rounded-full text-[12px] flex items-center justify-center cursor-pointer", 
+                        value === i ? "bg-primary/20 text-primary font-medium" : "bg-neutral-100 hover:bg-neutral-200"
+                      )}
                     >
                       {i}
                     </button>
