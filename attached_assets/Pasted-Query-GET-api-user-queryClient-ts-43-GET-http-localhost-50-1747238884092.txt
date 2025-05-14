@@ -1,0 +1,66 @@
+Query: GET /api/user
+queryClient.ts:43 
+            
+            
+           GET http://localhost:5009/api/user 401 (Unauthorized)
+(anonime) @ queryClient.ts:43
+fetchFn @ @tanstack_react-query.js?v=cebdc809:840
+run @ @tanstack_react-query.js?v=cebdc809:494
+start @ @tanstack_react-query.js?v=cebdc809:536
+fetch @ @tanstack_react-query.js?v=cebdc809:926
+executeFetch_fn @ @tanstack_react-query.js?v=cebdc809:2211
+fetch @ @tanstack_react-query.js?v=cebdc809:2011
+refetch @ @tanstack_react-query.js?v=cebdc809:2001
+login @ use-auth.tsx:62
+await in login
+onLoginSubmit @ auth-page.tsx:72
+(anonime) @ chunk-4BFJKWC4.js?v=cebdc809:1465
+await in (anonime)
+callCallback2 @ chunk-RPCDYKBN.js?v=cebdc809:3674
+invokeGuardedCallbackDev @ chunk-RPCDYKBN.js?v=cebdc809:3699
+invokeGuardedCallback @ chunk-RPCDYKBN.js?v=cebdc809:3733
+invokeGuardedCallbackAndCatchFirstError @ chunk-RPCDYKBN.js?v=cebdc809:3736
+executeDispatch @ chunk-RPCDYKBN.js?v=cebdc809:7014
+processDispatchQueueItemsInOrder @ chunk-RPCDYKBN.js?v=cebdc809:7034
+processDispatchQueue @ chunk-RPCDYKBN.js?v=cebdc809:7043
+dispatchEventsForPlugins @ chunk-RPCDYKBN.js?v=cebdc809:7051
+(anonime) @ chunk-RPCDYKBN.js?v=cebdc809:7174
+batchedUpdates$1 @ chunk-RPCDYKBN.js?v=cebdc809:18913
+batchedUpdates @ chunk-RPCDYKBN.js?v=cebdc809:3579
+dispatchEventForPluginEventSystem @ chunk-RPCDYKBN.js?v=cebdc809:7173
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-RPCDYKBN.js?v=cebdc809:5478
+dispatchEvent @ chunk-RPCDYKBN.js?v=cebdc809:5472
+dispatchDiscreteEvent @ chunk-RPCDYKBN.js?v=cebdc809:5449Comprendi l'errore
+queryClient.ts:59 Query error: 401 Unauthorized for /api/user
+overrideMethod @ hook.js:608
+(anonime) @ queryClient.ts:59
+await in (anonime)
+fetchFn @ @tanstack_react-query.js?v=cebdc809:840
+run @ @tanstack_react-query.js?v=cebdc809:494
+start @ @tanstack_react-query.js?v=cebdc809:536
+fetch @ @tanstack_react-query.js?v=cebdc809:926
+executeFetch_fn @ @tanstack_react-query.js?v=cebdc809:2211
+fetch @ @tanstack_react-query.js?v=cebdc809:2011
+refetch @ @tanstack_react-query.js?v=cebdc809:2001
+login @ use-auth.tsx:62
+await in login
+onLoginSubmit @ auth-page.tsx:72
+(anonime) @ chunk-4BFJKWC4.js?v=cebdc809:1465
+await in (anonime)
+callCallback2 @ chunk-RPCDYKBN.js?v=cebdc809:3674
+invokeGuardedCallbackDev @ chunk-RPCDYKBN.js?v=cebdc809:3699
+invokeGuardedCallback @ chunk-RPCDYKBN.js?v=cebdc809:3733
+invokeGuardedCallbackAndCatchFirstError @ chunk-RPCDYKBN.js?v=cebdc809:3736
+executeDispatch @ chunk-RPCDYKBN.js?v=cebdc809:7014
+processDispatchQueueItemsInOrder @ chunk-RPCDYKBN.js?v=cebdc809:7034
+processDispatchQueue @ chunk-RPCDYKBN.js?v=cebdc809:7043
+dispatchEventsForPlugins @ chunk-RPCDYKBN.js?v=cebdc809:7051
+(anonime) @ chunk-RPCDYKBN.js?v=cebdc809:7174
+batchedUpdates$1 @ chunk-RPCDYKBN.js?v=cebdc809:18913
+batchedUpdates @ chunk-RPCDYKBN.js?v=cebdc809:3579
+dispatchEventForPluginEventSystem @ chunk-RPCDYKBN.js?v=cebdc809:7173
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-RPCDYKBN.js?v=cebdc809:5478
+dispatchEvent @ chunk-RPCDYKBN.js?v=cebdc809:5472
+dispatchDiscreteEvent @ chunk-RPCDYKBN.js?v=cebdc809:5449Comprendi l'errore
+queryClient.ts:72 Query execution error: Error: API request failed: Unauthorized
+    at queryClient.ts:60:28
