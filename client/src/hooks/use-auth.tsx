@@ -50,7 +50,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
       const response = await fetch(`${baseUrl}/api/auth/login`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
         credentials: "include",
         body: JSON.stringify({ username, password }),
       });
