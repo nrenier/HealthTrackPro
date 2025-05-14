@@ -11,6 +11,9 @@ import ProfileHeader from "@/components/profile-header";
 import MoodTracker from "@/components/mood-tracker";
 import FlowTracker from "@/components/flow-tracker";
 import PainTracker from "@/components/pain-tracker";
+import AdditionalInfoTracker, { 
+  PregnancyTestType, PhysicalActivityType, Medicine 
+} from "@/components/additional-info-tracker";
 import BottomNavigation from "@/components/bottom-navigation";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
@@ -21,22 +24,22 @@ export default function SymptomPage() {
   const [_, navigate] = useLocation();
   const { toast } = useToast();
   const { user } = useAuth();
-  
+
   // Validate date format
   const parsedDate = params.date ? new Date(params.date) : new Date();
   const isValidDate = !isNaN(parsedDate.getTime());
   const [shouldRedirect, setShouldRedirect] = useState(!isValidDate);
-  
+
   // Handle redirection if invalid date
   useEffect(() => {
     if (shouldRedirect) {
       navigate("/calendar");
     }
   }, [shouldRedirect, navigate]);
-  
+
   const formattedDate = format(parsedDate, "yyyy-MM-dd");
   const displayDate = format(parsedDate, "d MMMM");
-  
+
   // State for form
   const [mood, setMood] = useState<string | null>(null);
   const [flow, setFlow] = useState<string | null>(null);
@@ -46,7 +49,10 @@ export default function SymptomPage() {
     inFeces: false,
     inUrine: false
   });
-  
+  const [pregnancyTest, setPregnancyTest] = useState<PregnancyTestType>("none");
+  const [physicalActivities, setPhysicalActivities] = useState<PhysicalActivityType[]>(["none"]);
+  const [medicines, setMedicines] = useState<Medicine[]>([]);
+
   // Fetch diary entry if exists
   const { data: entryData, isLoading, error: queryError } = useQuery<DiaryEntryWithDetails>({
     queryKey: [`/api/diary/${formattedDate}`],
@@ -57,7 +63,7 @@ export default function SymptomPage() {
       return failureCount < 3;
     }
   });
-  
+
   // Handle query error
   useEffect(() => {
     if (queryError && (queryError as any).status !== 404) {
@@ -68,7 +74,7 @@ export default function SymptomPage() {
       });
     }
   }, [queryError, toast]);
-  
+
   // Set form state from fetched data
   useEffect(() => {
     if (entryData) {
@@ -82,9 +88,12 @@ export default function SymptomPage() {
           inUrine: entryData.bloodPresence.inUrine
         });
       }
+      setPregnancyTest(entryData.pregnancyTest || "none");
+      setPhysicalActivities(entryData.physicalActivities || ["none"]);
+      setMedicines(entryData.medicines || []);
     }
   }, [entryData]);
-  
+
   // Handle pain changes
   const handlePainChange = (location: string, intensity: number) => {
     setPainSymptoms(prev => {
@@ -104,12 +113,12 @@ export default function SymptomPage() {
       }
     });
   };
-  
+
   // Handle blood presence changes
   const handleBloodChange = (type: "inFeces" | "inUrine", value: boolean) => {
     setBloodPresence(prev => ({ ...prev, [type]: value }));
   };
-  
+
   // Save mutation
   const saveMutation = useMutation({
     mutationFn: async () => {
@@ -122,9 +131,12 @@ export default function SymptomPage() {
           location: p.location,
           intensity: p.intensity
         })),
-        bloodPresence
+        bloodPresence,
+        pregnancyTest,
+        physicalActivities,
+        medicines
       };
-      
+
       if (entryData) {
         // Update existing entry
         const res = await apiRequest("PUT", `/api/diary/${formattedDate}`, payload);
@@ -138,12 +150,12 @@ export default function SymptomPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`/api/diary/${formattedDate}`] });
       queryClient.invalidateQueries({ queryKey: ["/api/diary"] });
-      
+
       toast({
         title: "Success",
         description: "Diary entry saved successfully",
       });
-      
+
       navigate("/calendar");
     },
     onError: (error: any) => {
@@ -154,15 +166,15 @@ export default function SymptomPage() {
       });
     }
   });
-  
+
   const handleSave = () => {
     saveMutation.mutate();
   };
-  
+
   return (
     <div className="min-h-screen flex flex-col bg-background max-w-md mx-auto">
       <ProfileHeader showBackButton title="Come ti senti oggi?" />
-      
+
       <div className="p-4 flex-1 overflow-y-auto">
         {isLoading ? (
           <div className="flex items-center justify-center h-64">
@@ -171,16 +183,25 @@ export default function SymptomPage() {
         ) : (
           <div className="space-y-6">
             <MoodTracker value={mood} onChange={setMood} />
-            
+
             <FlowTracker value={flow} onChange={setFlow} />
-            
+
             <PainTracker 
               painSymptoms={painSymptoms} 
               bloodPresence={bloodPresence}
               onPainChange={handlePainChange}
               onBloodChange={handleBloodChange}
             />
-            
+
+            <AdditionalInfoTracker
+              pregnancyTest={pregnancyTest}
+              physicalActivities={physicalActivities}
+              medicines={medicines}
+              onPregnancyTestChange={setPregnancyTest}
+              onPhysicalActivitiesChange={setPhysicalActivities}
+              onMedicinesChange={setMedicines}
+            />
+
             <div className="mb-6">
               <h2 className="text-base font-medium mb-3">Note</h2>
               <Textarea
@@ -190,7 +211,7 @@ export default function SymptomPage() {
                 rows={3}
               />
             </div>
-            
+
             <Button 
               className="w-full" 
               onClick={handleSave}
@@ -204,7 +225,7 @@ export default function SymptomPage() {
           </div>
         )}
       </div>
-      
+
       <BottomNavigation />
     </div>
   );
