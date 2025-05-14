@@ -61,19 +61,21 @@ export default function SymptomPage() {
       // Don't retry on 404 (no entry yet)
       if (error?.status === 404) return false;
       return failureCount < 3;
+    },
+    onError: (error: any) => {
+      // Non mostrare errori per 404, è un caso normale per nuove date
+      if (error.status !== 404) {
+        toast({
+          title: "Errore",
+          description: "Impossibile caricare i dati del diario",
+          variant: "destructive",
+        });
+      }
     }
   });
 
-  // Handle query error
-  useEffect(() => {
-    if (queryError && (queryError as any).status !== 404) {
-      toast({
-        title: "Error",
-        description: "Failed to load diary entry",
-        variant: "destructive",
-      });
-    }
-  }, [queryError, toast]);
+  // Utilizziamo direttamente onError nella query invece di questo useEffect
+  // che potrebbe causare problemi con la gestione dello stato
 
   // Set form data if entry exists
   useEffect(() => {
@@ -137,14 +139,24 @@ export default function SymptomPage() {
         medicines
       };
 
-      if (entryData) {
-        // Update existing entry
-        const res = await apiRequest("PUT", `/api/diary/${formattedDate}`, payload);
-        return await res.json();
-      } else {
-        // Create new entry
-        const res = await apiRequest("POST", "/api/diary", payload);
-        return await res.json();
+      try {
+        if (entryData) {
+          // Update existing entry
+          const res = await apiRequest("PUT", `/api/diary/${formattedDate}`, payload);
+          return await res.json();
+        } else {
+          // Create new entry
+          const res = await apiRequest("POST", "/api/diary", payload);
+          return await res.json();
+        }
+      } catch (error: any) {
+        // Gestione dell'errore 409 (record già esistente)
+        if (error.status === 409) {
+          // Se il record esiste già, fai un update
+          const res = await apiRequest("PUT", `/api/diary/${formattedDate}`, payload);
+          return await res.json();
+        }
+        throw error;
       }
     },
     onSuccess: () => {
@@ -152,16 +164,16 @@ export default function SymptomPage() {
       queryClient.invalidateQueries({ queryKey: ["/api/diary"] });
 
       toast({
-        title: "Success",
-        description: "Diary entry saved successfully",
+        title: "Salvato",
+        description: "I dati sono stati salvati con successo",
       });
 
       navigate("/calendar");
     },
     onError: (error: any) => {
       toast({
-        title: "Error",
-        description: error.message || "Failed to save diary entry",
+        title: "Errore",
+        description: error.message || "Impossibile salvare i dati",
         variant: "destructive",
       });
     }
