@@ -77,18 +77,15 @@ export default function PainTracker({
                     >
                       {i}
                     </span>
+                  <button 
+                      onClick={() => onPainChange(pain.id, i)}
+                      className="cursor-pointer"
+                    >
+                      {i}
+                    </button>
                   </div>
                 ))}
               </div>
-              <Slider
-                id={`pain-${pain.id}`}
-                value={[value]}
-                min={0}
-                max={10}
-                step={1}
-                onValueChange={(values) => onPainChange(pain.id, values[0])}
-                className="mt-1"
-              />
             </div>
           </div>
         );

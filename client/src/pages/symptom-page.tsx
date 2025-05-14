@@ -67,7 +67,7 @@ export default function SymptomPage() {
       if (error.status === 404) {
         return null;
       }
-      
+
       // Altri errori
       if (error.status !== 404) {
         console.error("Diary query error:", error);
@@ -148,7 +148,7 @@ export default function SymptomPage() {
       // Utilizziamo POST come predefinito per creare nuovi record
       let method = "POST";
       let endpoint = "/api/diary";
-      
+
       // Verifica se l'entry esiste già
       const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
       try {
@@ -156,7 +156,7 @@ export default function SymptomPage() {
           credentials: 'include',
           method: 'GET'
         });
-        
+
         // Se la richiesta ha successo, l'entry esiste e dobbiamo fare un PUT invece
         if (checkRes.ok) {
           method = "PUT";
@@ -166,7 +166,7 @@ export default function SymptomPage() {
         console.error("Error checking entry existence:", e);
         // In caso di errore, continuiamo con POST per sicurezza
       }
-      
+
       try {
         console.log(`Submitting with ${method} to ${endpoint}`);
         const res = await fetch(`${baseUrl}${endpoint}`, {
@@ -177,7 +177,7 @@ export default function SymptomPage() {
           credentials: 'include',
           body: JSON.stringify(payload)
         });
-        
+
         if (!res.ok) {
           // Se otteniamo un 409 (conflitto - record esiste già), proviamo con PUT
           if (res.status === 409 && method === "POST") {
@@ -190,17 +190,17 @@ export default function SymptomPage() {
               credentials: 'include',
               body: JSON.stringify(payload)
             });
-            
+
             if (!putRes.ok) {
               throw new Error(`API PUT request failed: ${putRes.statusText}`);
             }
-            
+
             return await putRes.json();
           }
-          
+
           throw new Error(`API request failed: ${res.statusText}`);
         }
-        
+
         return await res.json();
       } catch (error: any) {
         console.error("Save mutation error:", error);

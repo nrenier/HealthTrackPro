@@ -37,7 +37,7 @@ interface AdditionalInfoTrackerProps {
   physicalActivities: PhysicalActivityType[];
   medicines: Medicine[];
   onPregnancyTestChange: (value: PregnancyTestType) => void;
-  onPhysicalActivityChange: (activities: PhysicalActivityType[]) => void;
+  onPhysicalActivitiesChange: (activities: PhysicalActivityType[]) => void;
   onMedicinesChange: (medicines: Medicine[]) => void;
 }
 
@@ -46,7 +46,7 @@ export default function AdditionalInfoTracker({
   physicalActivities,
   medicines,
   onPregnancyTestChange,
-  onPhysicalActivityChange,
+  onPhysicalActivitiesChange,
   onMedicinesChange
 }: AdditionalInfoTrackerProps) {
   const [newMedicine, setNewMedicine] = useState({ name: "", dosage: "" });
@@ -58,7 +58,7 @@ export default function AdditionalInfoTracker({
     
     if (activity === "none") {
       // Se è stato selezionato "nessuna attività", rimuovi tutte le altre
-      onPhysicalActivityChange(["none"]);
+      onPhysicalActivitiesChange(["none"]);
       return;
     }
     
@@ -68,11 +68,11 @@ export default function AdditionalInfoTracker({
     const activityIndex = filteredActivities.indexOf(activity);
     if (activityIndex === -1) {
       // Aggiungi l'attività se non è presente
-      onPhysicalActivityChange([...filteredActivities, activity]);
+      onPhysicalActivitiesChange([...filteredActivities, activity]);
     } else {
       // Rimuovi l'attività se è già presente
       filteredActivities.splice(activityIndex, 1);
-      onPhysicalActivityChange(
+      onPhysicalActivitiesChange(
         filteredActivities.length === 0 ? ["none"] : filteredActivities
       );
     }
