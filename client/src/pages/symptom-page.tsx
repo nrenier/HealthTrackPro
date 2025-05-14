@@ -57,11 +57,7 @@ export default function SymptomPage() {
   const { data: entryData, isLoading, error: queryError } = useQuery<DiaryEntryWithDetails>({
     queryKey: [`/api/diary/${formattedDate}`],
     enabled: !!user,
-    retry: (failureCount, error: any) => {
-      // Don't retry on 404 (no entry yet)
-      if (error?.status === 404) return false;
-      return failureCount < 3;
-    },
+    retry: false, // Non riprovare per nessun errore
     onError: (error: any) => {
       // Non mostrare errori per 404, è un caso normale per nuove date
       if (error.status !== 404) {
@@ -140,7 +136,25 @@ export default function SymptomPage() {
       };
 
       try {
+        // Prima verifica se esiste già un record (entryData potrebbe non essere aggiornato)
+        let exists = false;
+        
         if (entryData) {
+          exists = true;
+        } else {
+          // Verifica manualmente se esiste un record
+          try {
+            const checkRes = await fetch(`${import.meta.env.VITE_API_BASE_URL || ''}/api/diary/${formattedDate}`, {
+              credentials: 'include'
+            });
+            exists = checkRes.ok;
+          } catch (e) {
+            // Se la verifica fallisce, assume che non esista
+            exists = false;
+          }
+        }
+
+        if (exists) {
           // Update existing entry
           const res = await apiRequest("PUT", `/api/diary/${formattedDate}`, payload);
           return await res.json();
