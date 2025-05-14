@@ -35,7 +35,7 @@ export function setupAuth(app: Express) {
     secret: sessionSecret,
     resave: false,
     saveUninitialized: false,
-    store: storage.sessionStore,
+    store: storage.getSessionStore(sessionSecret),
     cookie: {
       httpOnly: true,
       secure: app.get('env') === 'production',

@@ -91,33 +91,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
         notes: req.body.notes || null,
       });
 
-      // Create pain symptoms
+      // Add pain symptoms directly to the diary entry
       if (req.body.painSymptoms && Array.isArray(req.body.painSymptoms)) {
-        for (const pain of req.body.painSymptoms) {
-          // Validate pain location
-          if (!painLocations.includes(pain.location)) {
-            continue;
-          }
-
-          await storage.createPainSymptom({
-            diaryEntryId: newEntry.id,
-            location: pain.location,
-            intensity: pain.intensity,
-          });
-        }
-      }
-
-      // Create blood presence record
-      if (req.body.bloodPresence) {
-        await storage.createBloodPresence({
-          diaryEntryId: newEntry.id,
-          inFeces: !!req.body.bloodPresence.inFeces,
-          inUrine: !!req.body.bloodPresence.inUrine,
+        // Update the diary entry with pain symptoms
+        await storage.updateDiaryEntry(newEntry.id, {
+          painSymptoms: req.body.painSymptoms.filter(pain => 
+            painLocations.includes(pain.location)
+          )
         });
       }
 
-      // Get the complete entry with all related data
-      const completeEntry = await storage.getDiaryEntryWithDetails(newEntry.id);
+      // Add blood presence directly to the diary entry
+      if (req.body.bloodPresence) {
+        await storage.updateDiaryEntry(newEntry.id, {
+          bloodInFeces: !!req.body.bloodPresence.inFeces,
+          bloodInUrine: !!req.body.bloodPresence.inUrine
+        });
+      }
+
+      // Get the complete entry after updates
+      const completeEntry = await storage.getDiaryEntryById(newEntry.id);
       res.status(201).json(completeEntry);
     } catch (error) {
       next(error);
