@@ -1,0 +1,37 @@
+npm error Missing script: "drizzle-kit"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /home/hb/.npm/_logs/2025-05-14T14_09_21_920Z-debug-0.log
+hb@NICREN:~/lab/HealthTrackPro$ cat /home/hb/.npm/_logs/2025-05-14T14_09_21_920Z-debug-0.log
+0 verbose cli /home/hb/.nvm/versions/node/v20.18.0/bin/node /home/hb/.nvm/versions/node/v20.18.0/bin/npm
+1 info using npm@10.8.2
+2 info using node@v20.18.0
+3 silly config load:file:/home/hb/.nvm/versions/node/v20.18.0/lib/node_modules/npm/npmrc
+4 silly config load:file:/home/hb/lab/HealthTrackPro/.npmrc
+5 silly config load:file:/home/hb/.npmrc
+6 silly config load:file:/home/hb/.nvm/versions/node/v20.18.0/etc/npmrc
+7 verbose title npm run drizzle-kit generate
+8 verbose argv "run" "drizzle-kit" "generate"
+9 verbose logfile logs-max:10 dir:/home/hb/.npm/_logs/2025-05-14T14_09_21_920Z-
+10 verbose logfile /home/hb/.npm/_logs/2025-05-14T14_09_21_920Z-debug-0.log
+11 silly logfile start cleaning logs, removing 1 files
+12 verbose stack Error: Missing script: "drizzle-kit"
+12 verbose stack
+12 verbose stack To see a list of scripts, run:
+12 verbose stack   npm run
+12 verbose stack     at #run (/home/hb/.nvm/versions/node/v20.18.0/lib/node_modules/npm/lib/commands/run-script.js:110:13)
+12 verbose stack     at async RunScript.exec (/home/hb/.nvm/versions/node/v20.18.0/lib/node_modules/npm/lib/commands/run-script.js:39:7)
+12 verbose stack     at async Npm.exec (/home/hb/.nvm/versions/node/v20.18.0/lib/node_modules/npm/lib/npm.js:207:9)
+12 verbose stack     at async module.exports (/home/hb/.nvm/versions/node/v20.18.0/lib/node_modules/npm/lib/cli/entry.js:74:5)
+13 error Missing script: "drizzle-kit"
+13 error
+13 error To see a list of scripts, run:
+13 error   npm run
+14 verbose cwd /home/hb/lab/HealthTrackPro
+15 verbose os Linux 5.15.167.4-microsoft-standard-WSL2
+16 verbose node v20.18.0
+17 verbose npm  v10.8.2
+18 verbose exit 1
+19 verbose code 1
+20 error A complete log of this run can be found in: /home/hb/.npm/_logs/2025-05-14T14_09_21_920Z-debug-0.log
