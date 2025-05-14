@@ -30,7 +30,7 @@ async function comparePasswords(supplied: string, stored: string) {
 
 export function setupAuth(app: Express) {
   const sessionSecret = process.env.SESSION_SECRET || randomBytes(32).toString("hex");
-  
+
   const sessionSettings: session.SessionOptions = {
     secret: sessionSecret,
     resave: false,
@@ -54,13 +54,13 @@ export function setupAuth(app: Express) {
         // Check if username is an email
         const isEmail = username.includes('@');
         let user;
-        
+
         if (isEmail) {
           user = await storage.getUserByEmail(username);
         } else {
           user = await storage.getUserByUsername(username);
         }
-        
+
         if (!user || !(await comparePasswords(password, user.password))) {
           return done(null, false, { message: "Invalid credentials" });
         } else {
@@ -75,7 +75,7 @@ export function setupAuth(app: Express) {
   passport.serializeUser((user, done) => done(null, user.id));
   passport.deserializeUser(async (id: number, done) => {
     try {
-      const user = await storage.getUser(id);
+      const user = await storage.getUserById(id);
       done(null, user);
     } catch (error) {
       done(error);
@@ -87,11 +87,11 @@ export function setupAuth(app: Express) {
       // Check for existing user by email or username
       const existingUserByEmail = await storage.getUserByEmail(req.body.email);
       const existingUserByUsername = await storage.getUserByUsername(req.body.username);
-      
+
       if (existingUserByEmail) {
         return res.status(400).json({ message: "Email already in use" });
       }
-      
+
       if (existingUserByUsername) {
         return res.status(400).json({ message: "Username already exists" });
       }
@@ -120,7 +120,7 @@ export function setupAuth(app: Express) {
       if (!user) {
         return res.status(401).json({ message: info?.message || "Invalid credentials" });
       }
-      
+
       req.login(user, (err) => {
         if (err) return next(err);
         // Return user without password
@@ -139,7 +139,7 @@ export function setupAuth(app: Express) {
 
   app.get("/api/user", (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
-    
+
     // Return user without password
     const { password, ...userWithoutPassword } = req.user;
     res.json(userWithoutPassword);
