@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
+import App from "./App";
 import "./index.css";
 
-// L'applicazione del QueryClientProvider è stata spostata in App.tsx
-// per evitare problemi di nesting
+const rootElement = document.getElementById("root");
+if (!rootElement) throw new Error("Root element not found");
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>
+  </React.StrictMode>,
 );
