@@ -30,7 +30,8 @@ const profileSchema = z.object({
 type ProfileFormData = z.infer<typeof profileSchema>;
 
 export default function AccountPage() {
-  const { user, logoutMutation } = useAuth();
+  const { user, logout } = useAuth();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const { toast } = useToast();
   const [_, navigate] = useLocation();
   const [isUpdating, setIsUpdating] = useState(false);
@@ -62,12 +63,14 @@ export default function AccountPage() {
     }
   };
 
-  const handleLogout = () => {
-    logoutMutation.mutate(undefined, {
-      onSuccess: () => {
-        navigate("/auth");
-      },
-    });
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+    try {
+      await logout();
+      navigate("/auth");
+    } finally {
+      setIsLoggingOut(false);
+    }
   };
 
   if (!user) {
@@ -157,9 +160,9 @@ export default function AccountPage() {
             variant="destructive" 
             className="w-full" 
             onClick={handleLogout}
-            disabled={logoutMutation.isPending}
+            disabled={isLoggingOut}
           >
-            {logoutMutation.isPending ? (
+            {isLoggingOut ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : null}
             Logout

@@ -1,5 +1,6 @@
+
 import { useState, useEffect } from "react";
-import { useAuth, LoginData, RegisterData } from "@/hooks/use-auth";
+import { useAuth } from "@/hooks/use-auth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -34,10 +35,15 @@ const registerSchema = z.object({
   displayName: z.string().optional(),
 });
 
+type LoginData = z.infer<typeof loginSchema>;
+type RegisterData = z.infer<typeof registerSchema>;
+
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState<"login" | "register">("register");
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [isRegistering, setIsRegistering] = useState(false);
   const [_, navigate] = useLocation();
-  const { user, loginMutation, registerMutation } = useAuth();
+  const { user, login, register } = useAuth();
 
   // Prepare redirection state
   const shouldRedirect = !!user;
@@ -60,12 +66,28 @@ export default function AuthPage() {
     },
   });
 
-  const onLoginSubmit = (data: LoginData) => {
-    loginMutation.mutate(data);
+  const onLoginSubmit = async (data: LoginData) => {
+    setIsLoggingIn(true);
+    try {
+      const success = await login(data.username, data.password);
+      if (success) {
+        navigate("/");
+      }
+    } finally {
+      setIsLoggingIn(false);
+    }
   };
 
-  const onRegisterSubmit = (data: RegisterData) => {
-    registerMutation.mutate(data);
+  const onRegisterSubmit = async (data: RegisterData) => {
+    setIsRegistering(true);
+    try {
+      const success = await register(data.username, data.email, data.password);
+      if (success) {
+        navigate("/");
+      }
+    } finally {
+      setIsRegistering(false);
+    }
   };
 
   // Handle redirection after all hook calls
@@ -153,9 +175,9 @@ export default function AuthPage() {
                       <Button 
                         type="submit" 
                         className="w-full" 
-                        disabled={registerMutation.isPending}
+                        disabled={isRegistering}
                       >
-                        {registerMutation.isPending ? (
+                        {isRegistering ? (
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                         ) : null}
                         Create Account
@@ -204,9 +226,9 @@ export default function AuthPage() {
                       <Button 
                         type="submit" 
                         className="w-full" 
-                        disabled={loginMutation.isPending}
+                        disabled={isLoggingIn}
                       >
-                        {loginMutation.isPending ? (
+                        {isLoggingIn ? (
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                         ) : null}
                         Sign In
