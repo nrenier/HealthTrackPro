@@ -36,10 +36,10 @@ export const getQueryFn: <T>(options: {
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://0.0.0.0:5000';
       const url = `${baseUrl}${queryKey[0]}`;
       console.log(`Query: GET ${url}`);
-      
+
       const res = await fetch(url, {
         credentials: "include",
       });
@@ -48,7 +48,7 @@ export const getQueryFn: <T>(options: {
       if (unauthorizedBehavior === "returnNull" && res.status === 401) {
         return null;
       }
-      
+
       // 404 per ricerche di date è un caso normale
       if (res.status === 404 && url.includes('/api/diary/')) {
         console.log('Diary entry not found, returning null');
