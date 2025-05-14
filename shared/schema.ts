@@ -142,3 +142,10 @@ export type Medicine = {
   name: string;
   dosage: string;
 };
+
+// Session table (for connect-pg-simple)
+export const userSessions = pgTable("user_sessions", {
+  sid: text("sid").primaryKey(),
+  sess: jsonb("sess").notNull(),
+  expire: timestamp("expire", { withTimezone: true }).notNull(),
+});
