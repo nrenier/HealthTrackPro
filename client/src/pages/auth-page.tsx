@@ -81,10 +81,16 @@ export default function AuthPage() {
   const onRegisterSubmit = async (data: RegisterData) => {
     setIsRegistering(true);
     try {
+      console.log("Form data:", { ...data, password: "******" });
       const success = await register(data.username, data.email, data.password);
       if (success) {
         navigate("/");
+      } else {
+        console.error("Registration failed");
+        // Potremmo aggiungere un messaggio di errore all'utente qui
       }
+    } catch (error) {
+      console.error("Registration error:", error);
     } finally {
       setIsRegistering(false);
     }

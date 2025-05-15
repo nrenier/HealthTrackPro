@@ -80,17 +80,26 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   ): Promise<boolean> => {
     try {
       const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
+      console.log("Register payload:", { username, email, password: "******" });
+      
       const response = await fetch(`${baseUrl}/api/register`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
         credentials: "include",
         body: JSON.stringify({ username, email, password }),
       });
 
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Registration failed:", response.status, errorText);
         return false;
       }
 
+      const userData = await response.json();
+      setUser(userData);
       await refetch();
       return true;
     } catch (error) {
