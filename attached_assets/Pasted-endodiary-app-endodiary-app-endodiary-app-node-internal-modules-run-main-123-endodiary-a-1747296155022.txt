@@ -1,0 +1,87 @@
+endodiary-app  |
+endodiary-app  |
+endodiary-app  | node:internal/modules/run_main:123
+endodiary-app  |     triggerUncaughtException(
+endodiary-app  |     ^
+endodiary-app  | Error [TransformError]: Transform failed with 2 errors:
+endodiary-app  | /app/server/index.ts:62:8: ERROR: The symbol "server" has already been declared
+endodiary-app  | /app/server/index.ts:71:2: ERROR: Expected ")" but found "const"
+endodiary-app  |     at failureErrorWithLog (/app/node_modules/tsx/node_modules/esbuild/lib/main.js:1476:15)
+endodiary-app  |     at /app/node_modules/tsx/node_modules/esbuild/lib/main.js:755:50
+endodiary-app  |     at responseCallbacks.<computed> (/app/node_modules/tsx/node_modules/esbuild/lib/main.js:622:9)
+endodiary-app  |     at handleIncomingPacket (/app/node_modules/tsx/node_modules/esbuild/lib/main.js:677:12)
+endodiary-app  |     at Socket.readFromStdout (/app/node_modules/tsx/node_modules/esbuild/lib/main.js:600:7)
+endodiary-app  |     at Socket.emit (node:events:524:28)
+endodiary-app  |     at addChunk (node:internal/streams/readable:561:12)
+endodiary-app  |     at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+endodiary-app  |     at Readable.push (node:internal/streams/readable:392:5)
+endodiary-app  |     at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+endodiary-app  |
+endodiary-app  | Node.js v20.19.1
+endodiary-app  |
+endodiary-app  | > rest-express@1.0.0 dev
+endodiary-app  | > NODE_ENV=development tsx server/index.ts
+endodiary-app  |
+endodiary-app  |
+endodiary-app  | node:internal/modules/run_main:123
+endodiary-app  |     triggerUncaughtException(
+endodiary-app  |     ^
+endodiary-app  | Error [TransformError]: Transform failed with 2 errors:
+endodiary-app  | /app/server/index.ts:62:8: ERROR: The symbol "server" has already been declared
+endodiary-app  | /app/server/index.ts:71:2: ERROR: Expected ")" but found "const"
+endodiary-app  |     at failureErrorWithLog (/app/node_modules/tsx/node_modules/esbuild/lib/main.js:1476:15)
+endodiary-app  |     at /app/node_modules/tsx/node_modules/esbuild/lib/main.js:755:50
+endodiary-app  |     at responseCallbacks.<computed> (/app/node_modules/tsx/node_modules/esbuild/lib/main.js:622:9)
+endodiary-app  |     at handleIncomingPacket (/app/node_modules/tsx/node_modules/esbuild/lib/main.js:677:12)
+endodiary-app  |     at Socket.readFromStdout (/app/node_modules/tsx/node_modules/esbuild/lib/main.js:600:7)
+endodiary-app  |     at Socket.emit (node:events:524:28)
+endodiary-app  |     at addChunk (node:internal/streams/readable:561:12)
+endodiary-app  |     at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+endodiary-app  |     at Readable.push (node:internal/streams/readable:392:5)
+endodiary-app  |     at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+endodiary-app  |
+endodiary-app  | Node.js v20.19.1
+endodiary-app  |
+endodiary-app  | > rest-express@1.0.0 dev
+endodiary-app  | > NODE_ENV=development tsx server/index.ts
+endodiary-app  |
+endodiary-app  |
+endodiary-app  | node:internal/modules/run_main:123
+endodiary-app  |     triggerUncaughtException(
+endodiary-app  |     ^
+endodiary-app  | Error [TransformError]: Transform failed with 2 errors:
+endodiary-app  | /app/server/index.ts:62:8: ERROR: The symbol "server" has already been declared
+endodiary-app  | /app/server/index.ts:71:2: ERROR: Expected ")" but found "const"
+endodiary-app  |     at failureErrorWithLog (/app/node_modules/tsx/node_modules/esbuild/lib/main.js:1476:15)
+endodiary-app  |     at /app/node_modules/tsx/node_modules/esbuild/lib/main.js:755:50
+endodiary-app  |     at responseCallbacks.<computed> (/app/node_modules/tsx/node_modules/esbuild/lib/main.js:622:9)
+endodiary-app  |     at handleIncomingPacket (/app/node_modules/tsx/node_modules/esbuild/lib/main.js:677:12)
+endodiary-app  |     at Socket.readFromStdout (/app/node_modules/tsx/node_modules/esbuild/lib/main.js:600:7)
+endodiary-app  |     at Socket.emit (node:events:524:28)
+endodiary-app  |     at addChunk (node:internal/streams/readable:561:12)
+endodiary-app  |     at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+endodiary-app  |     at Readable.push (node:internal/streams/readable:392:5)
+endodiary-app  |     at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+endodiary-app  |
+endodiary-app  | Node.js v20.19.1
+endodiary-app  |
+endodiary-app  | > rest-express@1.0.0 dev
+endodiary-app  | > NODE_ENV=development tsx server/index.ts
+endodiary-app  |
+endodiary-app  |
+endodiary-app  | node:internal/modules/run_main:123
+endodiary-app  |     triggerUncaughtException(
+endodiary-app  |     ^
+endodiary-app  | Error [TransformError]: Transform failed with 2 errors:
+endodiary-app  | /app/server/index.ts:62:8: ERROR: The symbol "server" has already been declared
+endodiary-app  | /app/server/index.ts:71:2: ERROR: Expected ")" but found "const"
+endodiary-app  |     at failureErrorWithLog (/app/node_modules/tsx/node_modules/esbuild/lib/main.js:1476:15)
+endodiary-app  |     at /app/node_modules/tsx/node_modules/esbuild/lib/main.js:755:50
+endodiary-app  |     at responseCallbacks.<computed> (/app/node_modules/tsx/node_modules/esbuild/lib/main.js:622:9)
+endodiary-app  |     at handleIncomingPacket (/app/node_modules/tsx/node_modules/esbuild/lib/main.js:677:12)
+endodiary-app  |     at Socket.readFromStdout (/app/node_modules/tsx/node_modules/esbuild/lib/main.js:600:7)
+endodiary-app  |     at Socket.emit (node:events:524:28)
+endodiary-app  |     at addChunk (node:internal/streams/readable:561:12)
+endodiary-app  |     at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+endodiary-app  |     at Readable.push (node:internal/streams/readable:392:5)
+endodiary-app  |     at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
