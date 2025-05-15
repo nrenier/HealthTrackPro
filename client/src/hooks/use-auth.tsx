@@ -47,7 +47,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const login = async (username: string, password: string): Promise<boolean> => {
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL|| '';
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
       const response = await fetch(`${baseUrl}/api/login`, {
         method: "POST",
         headers: { 
@@ -59,9 +59,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       });
 
       if (!response.ok) {
+        console.error("Login failed:", await response.text());
         return false;
       }
 
+      const userData = await response.json();
+      setUser(userData);
       await refetch();
       return true;
     } catch (error) {
