@@ -1,0 +1,94 @@
+Query: GET /api/user
+queryClient.ts:43 
+            
+            
+           GET http://localhost:5009/api/user 401 (Unauthorized)
+(anonime) @ queryClient.ts:43
+fetchFn @ @tanstack_react-query.js?v=af784b39:840
+run @ @tanstack_react-query.js?v=af784b39:494
+start @ @tanstack_react-query.js?v=af784b39:536
+fetch @ @tanstack_react-query.js?v=af784b39:926
+executeFetch_fn @ @tanstack_react-query.js?v=af784b39:2211
+onSubscribe @ @tanstack_react-query.js?v=af784b39:1898
+subscribe @ @tanstack_react-query.js?v=af784b39:24
+(anonime) @ @tanstack_react-query.js?v=af784b39:3022
+subscribeToStore @ chunk-RPCDYKBN.js?v=af784b39:11984
+commitHookEffectListMount @ chunk-RPCDYKBN.js?v=af784b39:16915
+commitPassiveMountOnFiber @ chunk-RPCDYKBN.js?v=af784b39:18156
+commitPassiveMountEffects_complete @ chunk-RPCDYKBN.js?v=af784b39:18129
+commitPassiveMountEffects_begin @ chunk-RPCDYKBN.js?v=af784b39:18119
+commitPassiveMountEffects @ chunk-RPCDYKBN.js?v=af784b39:18109
+flushPassiveEffectsImpl @ chunk-RPCDYKBN.js?v=af784b39:19490
+flushPassiveEffects @ chunk-RPCDYKBN.js?v=af784b39:19447
+performSyncWorkOnRoot @ chunk-RPCDYKBN.js?v=af784b39:18868
+flushSyncCallbacks @ chunk-RPCDYKBN.js?v=af784b39:9119
+commitRootImpl @ chunk-RPCDYKBN.js?v=af784b39:19432
+commitRoot @ chunk-RPCDYKBN.js?v=af784b39:19277
+finishConcurrentRender @ chunk-RPCDYKBN.js?v=af784b39:18805
+performConcurrentWorkOnRoot @ chunk-RPCDYKBN.js?v=af784b39:18718
+workLoop @ chunk-RPCDYKBN.js?v=af784b39:197
+flushWork @ chunk-RPCDYKBN.js?v=af784b39:176
+performWorkUntilDeadline @ chunk-RPCDYKBN.js?v=af784b39:384Comprendi l'errore
+queryClient.ts:59 Query error: 401 Unauthorized for /api/user
+overrideMethod @ hook.js:608
+(anonime) @ queryClient.ts:59
+await in (anonime)
+fetchFn @ @tanstack_react-query.js?v=af784b39:840
+run @ @tanstack_react-query.js?v=af784b39:494
+start @ @tanstack_react-query.js?v=af784b39:536
+fetch @ @tanstack_react-query.js?v=af784b39:926
+executeFetch_fn @ @tanstack_react-query.js?v=af784b39:2211
+onSubscribe @ @tanstack_react-query.js?v=af784b39:1898
+subscribe @ @tanstack_react-query.js?v=af784b39:24
+(anonime) @ @tanstack_react-query.js?v=af784b39:3022
+subscribeToStore @ chunk-RPCDYKBN.js?v=af784b39:11984
+commitHookEffectListMount @ chunk-RPCDYKBN.js?v=af784b39:16915
+commitPassiveMountOnFiber @ chunk-RPCDYKBN.js?v=af784b39:18156
+commitPassiveMountEffects_complete @ chunk-RPCDYKBN.js?v=af784b39:18129
+commitPassiveMountEffects_begin @ chunk-RPCDYKBN.js?v=af784b39:18119
+commitPassiveMountEffects @ chunk-RPCDYKBN.js?v=af784b39:18109
+flushPassiveEffectsImpl @ chunk-RPCDYKBN.js?v=af784b39:19490
+flushPassiveEffects @ chunk-RPCDYKBN.js?v=af784b39:19447
+performSyncWorkOnRoot @ chunk-RPCDYKBN.js?v=af784b39:18868
+flushSyncCallbacks @ chunk-RPCDYKBN.js?v=af784b39:9119
+commitRootImpl @ chunk-RPCDYKBN.js?v=af784b39:19432
+commitRoot @ chunk-RPCDYKBN.js?v=af784b39:19277
+finishConcurrentRender @ chunk-RPCDYKBN.js?v=af784b39:18805
+performConcurrentWorkOnRoot @ chunk-RPCDYKBN.js?v=af784b39:18718
+workLoop @ chunk-RPCDYKBN.js?v=af784b39:197
+flushWork @ chunk-RPCDYKBN.js?v=af784b39:176
+performWorkUntilDeadline @ chunk-RPCDYKBN.js?v=af784b39:384Comprendi l'errore
+queryClient.ts:72 Query execution error: Error: API request failed: Unauthorized
+    at queryClient.ts:60:28
+overrideMethod @ hook.js:608
+(anonime) @ queryClient.ts:72
+await in (anonime)
+fetchFn @ @tanstack_react-query.js?v=af784b39:840
+run @ @tanstack_react-query.js?v=af784b39:494
+start @ @tanstack_react-query.js?v=af784b39:536
+fetch @ @tanstack_react-query.js?v=af784b39:926
+executeFetch_fn @ @tanstack_react-query.js?v=af784b39:2211
+onSubscribe @ @tanstack_react-query.js?v=af784b39:1898
+subscribe @ @tanstack_react-query.js?v=af784b39:24
+(anonime) @ @tanstack_react-query.js?v=af784b39:3022
+subscribeToStore @ chunk-RPCDYKBN.js?v=af784b39:11984
+commitHookEffectListMount @ chunk-RPCDYKBN.js?v=af784b39:16915
+commitPassiveMountOnFiber @ chunk-RPCDYKBN.js?v=af784b39:18156
+commitPassiveMountEffects_complete @ chunk-RPCDYKBN.js?v=af784b39:18129
+commitPassiveMountEffects_begin @ chunk-RPCDYKBN.js?v=af784b39:18119
+commitPassiveMountEffects @ chunk-RPCDYKBN.js?v=af784b39:18109
+flushPassiveEffectsImpl @ chunk-RPCDYKBN.js?v=af784b39:19490
+flushPassiveEffects @ chunk-RPCDYKBN.js?v=af784b39:19447
+performSyncWorkOnRoot @ chunk-RPCDYKBN.js?v=af784b39:18868
+flushSyncCallbacks @ chunk-RPCDYKBN.js?v=af784b39:9119
+commitRootImpl @ chunk-RPCDYKBN.js?v=af784b39:19432
+commitRoot @ chunk-RPCDYKBN.js?v=af784b39:19277
+finishConcurrentRender @ chunk-RPCDYKBN.js?v=af784b39:18805
+performConcurrentWorkOnRoot @ chunk-RPCDYKBN.js?v=af784b39:18718
+workLoop @ chunk-RPCDYKBN.js?v=af784b39:197
+flushWork @ chunk-RPCDYKBN.js?v=af784b39:176
+performWorkUntilDeadline @ chunk-RPCDYKBN.js?v=af784b39:384Comprendi l'errore
+use-auth.tsx:51 
+            
+            
+           POST http://localhost:5009/api/login 401 (Unauthorized)
