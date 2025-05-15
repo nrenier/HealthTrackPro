@@ -36,7 +36,7 @@ export const getQueryFn: <T>(options: {
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://0.0.0.0:5000';
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
       const url = `${baseUrl}${queryKey[0]}`;
       console.log(`Query: GET ${url}`);
 

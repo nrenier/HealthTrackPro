@@ -47,7 +47,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const login = async (username: string, password: string): Promise<boolean> => {
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://0.0.0.0:5000';
+      const baseUrl = import.meta.env.VITE_API_BASE_URL|| '';
       const response = await fetch(`${baseUrl}/api/login`, {
         method: "POST",
         headers: { 
@@ -77,7 +77,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   ): Promise<boolean> => {
     try {
       const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
-      const response = await fetch(`${baseUrl}/api/auth/register`, {
+      const response = await fetch(`${baseUrl}/api/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -99,7 +99,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const logout = async (): Promise<void> => {
     try {
       const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
-      await fetch(`${baseUrl}/api/auth/logout`, {
+      await fetch(`${baseUrl}/api/logout`, {
         method: "POST",
         credentials: "include",
       });
