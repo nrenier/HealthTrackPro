@@ -48,7 +48,10 @@ export default function AdditionalInfoTracker({
   onPhysicalActivitiesChange,
   onMedicinesChange
 }: AdditionalInfoTrackerProps) {
-  const [newMedicine, setNewMedicine] = useState({ name: "", dosage: "" });
+  const [medicines, setMedicines] = useState<Array<{ id: number; name: string; dosage: string }>>([]);
+  const [newMedicine, setNewMedicine] = useState<{ name: string; dosage: string }>({ name: '', dosage: '' });
+  const [visits, setVisits] = useState<Array<{ id: number; type: string; date: string; reportUrl?: string }>>([]);
+  const [newVisit, setNewVisit] = useState<{ type: string; date: string; report?: File | null }>({ type: '', date: '' });
   const [activeTab, setActiveTab] = useState<string>("pregnancy");
 
   // Gestisce la selezione/deselezione delle attività fisiche
@@ -96,6 +99,27 @@ export default function AdditionalInfoTracker({
     onMedicinesChange(medicines.filter(med => med.id !== id));
   };
 
+      // Gestione Visite mediche
+      const addVisit = () => {
+        if (!newVisit.type || !newVisit.date) return;
+    
+        //uploadReport();
+    
+        const visit = {
+          id: Date.now().toString(),
+          type: newVisit.type,
+          date: newVisit.date,
+          reportUrl: newVisit.report ? URL.createObjectURL(newVisit.report) : undefined,
+        };
+    
+        setVisits([...visits, visit]);
+        setNewVisit({ type: '', date: '', report: null });
+      };
+    
+      const removeVisit = (id: string) => {
+        setVisits(visits.filter(visit => visit.id !== id));
+      };
+
   return (
     <div className="mb-6">
       <Card>
@@ -104,7 +128,7 @@ export default function AdditionalInfoTracker({
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-3 mb-4">
+            <TabsList className="grid w-full grid-cols-4 mb-4">
               <TabsTrigger value="pregnancy">Test di gravidanza</TabsTrigger>
               <TabsTrigger value="activity">Attività fisica</TabsTrigger>
               <TabsTrigger value="medicines">Medicinali</TabsTrigger>
@@ -261,6 +285,65 @@ export default function AdditionalInfoTracker({
                       >
                         Rimuovi
                       </Button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </TabsContent>
+
+            <TabsContent value="visits" className="space-y-4">
+              <div className="flex space-x-2 mb-4">
+                <Input 
+                  type="text"
+                  placeholder="Tipo di visita" 
+                  value={newVisit?.type || ''}
+                  onChange={(e) => setNewVisit({...newVisit, type: e.target.value})}
+                />
+                <Input 
+                  type="date"
+                  value={newVisit?.date || ''}
+                  onChange={(e) => setNewVisit({...newVisit, date: e.target.value})}
+                />
+                <Input 
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  onChange={(e) => setNewVisit({...newVisit, report: e.target.files?.[0]})}
+                />
+                <Button onClick={addVisit} type="button" size="icon">
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+
+              {visits.length === 0 ? (
+                <div className="text-center text-muted-foreground text-sm p-4">
+                  Nessuna visita aggiunta
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {visits.map((visit) => (
+                    <div key={visit.id} className="flex items-center justify-between bg-muted p-3 rounded-md">
+                      <div>
+                        <p className="font-medium">{visit.type}</p>
+                        <p className="text-xs text-muted-foreground">{new Date(visit.date).toLocaleDateString()}</p>
+                      </div>
+                      <div className="flex gap-2">
+                        {visit.reportUrl && (
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            onClick={() => window.open(visit.reportUrl, '_blank')}
+                          >
+                            Vedi referto
+                          </Button>
+                        )}
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={() => removeVisit(visit.id)}
+                        >
+                          Rimuovi
+                        </Button>
+                      </div>
                     </div>
                   ))}
                 </div>
