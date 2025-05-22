@@ -108,8 +108,12 @@ export default function AuthPage() {
       <div className="container max-w-md mx-auto flex-1 flex flex-col items-center justify-center px-6 pt-12 pb-24">
         <div className="w-full">
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold tracking-tight">EndoDiary</h1>
-          </div>
+          <img 
+            src="/images/logo.png" 
+            alt="EndoDiary Logo" 
+            className="mx-auto w-32 h-auto mb-2" 
+          />
+        </div>
 
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "login" | "register")}>
             <TabsList className="grid w-full grid-cols-2 mb-6">

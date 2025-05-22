@@ -31,9 +31,21 @@ export default function ProfileHeader({ showBackButton = false, title }: Profile
       ) : null}
       
       {title ? (
-        <h1 className="text-lg font-semibold text-center flex-1">{title}</h1>
+        <div className="flex items-center justify-center flex-1">
+          <img 
+            src="/images/logo.png" 
+            alt="EndoDiary Logo" 
+            className="h-8 mr-2" 
+          />
+          <h1 className="text-lg font-semibold">{title}</h1>
+        </div>
       ) : (
         <div className="flex items-center">
+          <img 
+            src="/images/logo.png" 
+            alt="EndoDiary Logo" 
+            className="h-8 mr-2" 
+          />
           <Avatar className="h-8 w-8">
             <AvatarImage src="" />
             <AvatarFallback>{firstLetter}</AvatarFallback>
