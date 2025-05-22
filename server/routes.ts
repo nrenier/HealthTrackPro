@@ -120,7 +120,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         mood: req.body.mood || null,
         flow: req.body.flow || null,
         notes: req.body.notes || null,
-        visits: req.body.visits || []
+        visits: Array.isArray(req.body.visits) ? req.body.visits : [],
+        medicines: Array.isArray(req.body.medicines) ? req.body.medicines : []
       });
 
       // Add pain symptoms directly to the diary entry
@@ -214,7 +215,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       if (req.body.visits !== undefined) {
         const updatedEntry = await storage.updateDiaryEntry(existingEntry.id, {
-          visits: Array.isArray(req.body.visits) ? req.body.visits : []
+          visits: Array.isArray(req.body.visits) ? req.body.visits.map(visit => ({
+            id: visit.id || Date.now(),
+            type: visit.type,
+            date: visit.date,
+            reportFileName: visit.reportFileName
+          })) : []
         });
         if (!updatedEntry) {
           throw new Error("Failed to update visits");
