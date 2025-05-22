@@ -139,7 +139,7 @@ export default function AdditionalInfoTracker({
       const removeVisit = (id: number) => {
         const updatedVisits = visits.filter(visit => visit.id !== id);
         setVisits(updatedVisits);
-        onChange?.({ visits: updatedVisits }););
+        onChange?.({ visits: updatedVisits });
       };
 
       const downloadReport = async (fileName: string) => {
