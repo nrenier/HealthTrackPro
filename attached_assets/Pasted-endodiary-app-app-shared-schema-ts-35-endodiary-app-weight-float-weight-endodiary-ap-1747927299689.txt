@@ -1,0 +1,58 @@
+endodiary-app  | /app/shared/schema.ts:35
+endodiary-app  |   weight: float("weight"),
+endodiary-app  |           ^
+endodiary-app  |
+endodiary-app  |
+endodiary-app  | ReferenceError: float is not defined
+endodiary-app  |     at <anonymous> (/app/shared/schema.ts:35:11)
+endodiary-app  |     at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+endodiary-app  |     at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+endodiary-app  |     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+endodiary-app  |
+endodiary-app  | Node.js v20.19.2
+endodiary-app  |
+endodiary-app  | > rest-express@1.0.0 dev
+endodiary-app  | > NODE_ENV=development tsx server/index.ts
+endodiary-app  |
+endodiary-app  | /app/shared/schema.ts:35
+endodiary-app  |   weight: float("weight"),
+endodiary-app  |           ^
+endodiary-app  |
+endodiary-app  |
+endodiary-app  | ReferenceError: float is not defined
+endodiary-app  |     at <anonymous> (/app/shared/schema.ts:35:11)
+endodiary-app  |     at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+endodiary-app  |     at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+endodiary-app  |     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+endodiary-app  |
+endodiary-app  | Node.js v20.19.2
+endodiary-app  |
+endodiary-app  | > rest-express@1.0.0 dev
+endodiary-app  | > NODE_ENV=development tsx server/index.ts
+endodiary-app  |
+endodiary-app  | /app/shared/schema.ts:35
+endodiary-app  |   weight: float("weight"),
+endodiary-app  |           ^
+endodiary-app  |
+endodiary-app  |
+endodiary-app  | ReferenceError: float is not defined
+endodiary-app  |     at <anonymous> (/app/shared/schema.ts:35:11)
+endodiary-app  |     at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+endodiary-app  |     at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+endodiary-app  |     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+endodiary-app  |
+endodiary-app  | Node.js v20.19.2
+endodiary-app  |
+endodiary-app  | > rest-express@1.0.0 dev
+endodiary-app  | > NODE_ENV=development tsx server/index.ts
+endodiary-app  |
+endodiary-app  | /app/shared/schema.ts:35
+endodiary-app  |   weight: float("weight"),
+endodiary-app  |           ^
+endodiary-app  |
+endodiary-app  |
+endodiary-app  | ReferenceError: float is not defined
+endodiary-app  |     at <anonymous> (/app/shared/schema.ts:35:11)
+endodiary-app  |     at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+endodiary-app  |     at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+endodiary-app  |     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
