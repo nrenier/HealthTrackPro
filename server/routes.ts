@@ -201,16 +201,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      if (req.body.medicines) {
-        await storage.updateDiaryEntry(existingEntry.id, {
-          medicines: req.body.medicines
+      if (req.body.medicines !== undefined) {
+        const updatedEntry = await storage.updateDiaryEntry(existingEntry.id, {
+          medicines: Array.isArray(req.body.medicines) ? req.body.medicines : []
         });
+        if (!updatedEntry) {
+          throw new Error("Failed to update medicines");
+        }
       }
 
       if (req.body.visits !== undefined) {
-        await storage.updateDiaryEntry(existingEntry.id, {
-          visits: req.body.visits
+        const updatedEntry = await storage.updateDiaryEntry(existingEntry.id, {
+          visits: Array.isArray(req.body.visits) ? req.body.visits : []
         });
+        if (!updatedEntry) {
+          throw new Error("Failed to update visits");
+        }
       }
 
       // Ottieni l'entry aggiornato completo

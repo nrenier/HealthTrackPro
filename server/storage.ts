@@ -78,6 +78,7 @@ export class Storage {
         .update(diaryEntries)
         .set({
           ...entry,
+          medicines: entry.medicines !== undefined ? entry.medicines : undefined,
           visits: entry.visits !== undefined ? entry.visits : undefined
         })
         .where(eq(diaryEntries.id, id))
