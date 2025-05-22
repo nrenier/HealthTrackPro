@@ -127,12 +127,20 @@ export default function AdditionalInfoTracker({
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-4 mb-4">
-              <TabsTrigger value="pregnancy">Test di gravidanza</TabsTrigger>
-              <TabsTrigger value="activity">Attività fisica</TabsTrigger>
-              <TabsTrigger value="medicines">Medicinali</TabsTrigger>
-          <TabsTrigger value="visits">Visite Mediche</TabsTrigger>
-        </TabsList>
+            <TabsList className="grid w-full grid-cols-4 gap-2 mb-4">
+              <TabsTrigger value="pregnancy" className="flex flex-col h-auto py-2 whitespace-normal">
+                Test di gravidanza
+              </TabsTrigger>
+              <TabsTrigger value="activity" className="flex flex-col h-auto py-2 whitespace-normal">
+                Attività fisica
+              </TabsTrigger>
+              <TabsTrigger value="medicines" className="flex flex-col h-auto py-2 whitespace-normal">
+                Medicinali
+              </TabsTrigger>
+              <TabsTrigger value="visits" className="flex flex-col h-auto py-2 whitespace-normal">
+                Visite Mediche
+              </TabsTrigger>
+            </TabsList>
 
             <TabsContent value="pregnancy" className="space-y-4">
               <div className="grid grid-cols-2 gap-2">
@@ -291,26 +299,24 @@ export default function AdditionalInfoTracker({
             </TabsContent>
 
             <TabsContent value="visits" className="space-y-4">
-              <div className="flex space-x-2 mb-4">
-                <Input 
-                  type="text"
-                  placeholder="Tipo di visita" 
-                  value={newVisit?.type || ''}
-                  onChange={(e) => setNewVisit({...newVisit, type: e.target.value})}
-                />
-                <Input 
-                  type="date"
-                  value={newVisit?.date || ''}
-                  onChange={(e) => setNewVisit({...newVisit, date: e.target.value})}
-                />
-                <Input 
-                  type="file"
-                  accept=".pdf,.jpg,.jpeg,.png"
-                  onChange={(e) => setNewVisit({...newVisit, report: e.target.files?.[0]})}
-                />
-                <Button onClick={addVisit} type="button" size="icon">
-                  <Plus className="h-4 w-4" />
-                </Button>
+              <div className="space-y-3 mb-4">
+                <div className="flex space-x-2">
+                  <Input 
+                    type="text"
+                    placeholder="Tipo di visita" 
+                    value={newVisit?.type || ''}
+                    onChange={(e) => setNewVisit({...newVisit, type: e.target.value})}
+                    className="flex-grow"
+                  />
+                  <Input 
+                    type="file"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    onChange={(e) => setNewVisit({...newVisit, report: e.target.files?.[0]})}
+                  />
+                  <Button onClick={addVisit} type="button" size="icon">
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
 
               {visits.length === 0 ? (
