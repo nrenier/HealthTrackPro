@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Plus } from "lucide-react";
@@ -184,7 +185,6 @@ export default function AdditionalInfoTracker({
   return (
     <div className="mb-6">
       <div className="space-y-4">
-
         <h2 className="text-base font-medium mb-3">Altre informazioni</h2>
         <Card>
           <CardHeader className="pb-3">
@@ -224,7 +224,9 @@ export default function AdditionalInfoTracker({
                     <span className="text-xs">Nessun test</span>
                   </Button>
                   <Button
-                    variant={pregnancyTest === "positive" ? "default" : "outline"}
+                    variant={
+                      pregnancyTest === "positive" ? "default" : "outline"
+                    }
                     onClick={() => onPregnancyTestChange("positive")}
                     className="h-16 flex flex-col items-center justify-center"
                   >
@@ -232,7 +234,9 @@ export default function AdditionalInfoTracker({
                     <span className="text-xs">Positivo</span>
                   </Button>
                   <Button
-                    variant={pregnancyTest === "negative" ? "default" : "outline"}
+                    variant={
+                      pregnancyTest === "negative" ? "default" : "outline"
+                    }
                     onClick={() => onPregnancyTestChange("negative")}
                     className="h-16 flex flex-col items-center justify-center"
                   >
