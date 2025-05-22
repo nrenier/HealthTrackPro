@@ -173,6 +173,88 @@ export default function AdditionalInfoTracker({
 
   return (
     <div className="mb-6">
+       <div className="space-y-4">
+        <h2 className="text-base font-medium mb-3">Attività fisica</h2>
+        <Card>
+          <CardContent className="pt-4">
+            <div className="grid grid-cols-3 gap-2">
+              <Button 
+                variant={physicalActivities.includes("none") ? "default" : "outline"}
+                onClick={() => toggleActivity("none")}
+                className="h-16 flex flex-col items-center justify-center"
+              >
+                <span className="text-xl mb-1">🛋️</span>
+                <span className="text-xs">Nessuna attività</span>
+              </Button>
+              <Button 
+                variant={physicalActivities.includes("yoga") ? "default" : "outline"}
+                onClick={() => toggleActivity("yoga")}
+                className="h-16 flex flex-col items-center justify-center"
+              >
+                <span className="text-xl mb-1">🧘‍♀️</span>
+                <span className="text-xs">Yoga</span>
+              </Button>
+              <Button 
+                variant={physicalActivities.includes("gym") ? "default" : "outline"}
+                onClick={() => toggleActivity("gym")}
+                className="h-16 flex flex-col items-center justify-center"
+              >
+                <span className="text-xl mb-1">🏋️‍♀️</span>
+                <span className="text-xs">Palestra</span>
+              </Button>
+              <Button 
+                variant={physicalActivities.includes("aerobics") ? "default" : "outline"}
+                onClick={() => toggleActivity("aerobics")}
+                className="h-16 flex flex-col items-center justify-center"
+              >
+                <span className="text-xl mb-1">💃</span>
+                <span className="text-xs">Aerobica e danza</span>
+              </Button>
+              <Button 
+                variant={physicalActivities.includes("swimming") ? "default" : "outline"}
+                onClick={() => toggleActivity("swimming")}
+                className="h-16 flex flex-col items-center justify-center"
+              >
+                <span className="text-xl mb-1">🏊‍♀️</span>
+                <span className="text-xs">Nuoto</span>
+              </Button>
+              <Button 
+                variant={physicalActivities.includes("team-sport") ? "default" : "outline"}
+                onClick={() => toggleActivity("team-sport")}
+                className="h-16 flex flex-col items-center justify-center"
+              >
+                <span className="text-xl mb-1">🏐</span>
+                <span className="text-xs">Sport di squadra</span>
+              </Button>
+              <Button 
+                variant={physicalActivities.includes("running") ? "default" : "outline"}
+                onClick={() => toggleActivity("running")}
+                className="h-16 flex flex-col items-center justify-center"
+              >
+                <span className="text-xl mb-1">🏃‍♀️</span>
+                <span className="text-xs">Corsa</span>
+              </Button>
+              <Button 
+                variant={physicalActivities.includes("cycling") ? "default" : "outline"}
+                onClick={() => toggleActivity("cycling")}
+                className="h-16 flex flex-col items-center justify-center"
+              >
+                <span className="text-xl mb-1">🚴‍♀️</span>
+                <span className="text-xs">Bicicletta</span>
+              </Button>
+              <Button 
+                variant={physicalActivities.includes("walking") ? "default" : "outline"}
+                onClick={() => toggleActivity("walking")}
+                className="h-16 flex flex-col items-center justify-center"
+              >
+                <span className="text-xl mb-1">🚶‍♀️</span>
+                <span className="text-xs">Camminare</span>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        <h2 className="text-base font-medium mb-3">Altre informazioni</h2>
       <Card>
         <CardHeader className="pb-3">
           <CardTitle>Altre informazioni</CardTitle>
