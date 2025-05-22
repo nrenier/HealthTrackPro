@@ -31,6 +31,9 @@ export const diaryEntries = pgTable("diary_entries", {
   mood: moodEnum("mood"),
   flow: flowEnum("flow"),
   notes: text("notes"),
+  waterIntake: integer("water_intake"),
+  weight: float("weight"),
+  basalTemperature: float("basal_temperature"),
   
   // Pain symptoms data (stored as JSON)
   painSymptoms: jsonb("pain_symptoms").$type<Array<{

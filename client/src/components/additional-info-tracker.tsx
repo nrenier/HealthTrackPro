@@ -35,10 +35,13 @@ interface AdditionalInfoTrackerProps {
   pregnancyTest: PregnancyTestType;
   physicalActivities: PhysicalActivityType[];
   medicines: Medicine[];
+  waterIntake?: number;
+  weight?: number;
+  basalTemperature?: number;
   onPregnancyTestChange: (value: PregnancyTestType) => void;
   onPhysicalActivitiesChange: (activities: PhysicalActivityType[]) => void;
   onMedicinesChange: (medicines: Medicine[]) => void;
-  onChange?: (updates: { visits?: any[] }) => void;
+  onChange?: (updates: { visits?: any[], waterIntake?: number, weight?: number, basalTemperature?: number }) => void;
 }
 
 export default function AdditionalInfoTracker({
@@ -172,7 +175,7 @@ export default function AdditionalInfoTracker({
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-4 gap-2 mb-4">
+            <TabsList className="grid w-full grid-cols-7 gap-2 mb-4">
               <TabsTrigger value="pregnancy" className="flex flex-col h-auto py-2 whitespace-normal">
                 Test di gravidanza
               </TabsTrigger>
@@ -184,6 +187,15 @@ export default function AdditionalInfoTracker({
               </TabsTrigger>
               <TabsTrigger value="visits" className="flex flex-col h-auto py-2 whitespace-normal">
                 Visite Mediche
+              </TabsTrigger>
+              <TabsTrigger value="water" className="flex flex-col h-auto py-2 whitespace-normal">
+                Acqua
+              </TabsTrigger>
+              <TabsTrigger value="weight" className="flex flex-col h-auto py-2 whitespace-normal">
+                Peso
+              </TabsTrigger>
+              <TabsTrigger value="temperature" className="flex flex-col h-auto py-2 whitespace-normal">
+                Temperatura
               </TabsTrigger>
             </TabsList>
 
@@ -398,6 +410,45 @@ export default function AdditionalInfoTracker({
                   ))}
                 </div>
               )}
+            </TabsContent>
+
+            <TabsContent value="water" className="space-y-4">
+              <div className="flex items-center gap-4">
+                <Input
+                  type="number"
+                  placeholder="0"
+                  value={props.waterIntake || ''}
+                  onChange={(e) => onChange?.({ waterIntake: parseFloat(e.target.value) || 0 })}
+                  className="w-24"
+                />
+                <span>/ 2,25 L</span>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="weight" className="space-y-4">
+              <div className="flex items-center gap-4">
+                <Input
+                  type="number"
+                  step="0.1"
+                  placeholder="Registra il tuo peso"
+                  value={props.weight || ''}
+                  onChange={(e) => onChange?.({ weight: parseFloat(e.target.value) || 0 })}
+                />
+                <span>kg</span>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="temperature" className="space-y-4">
+              <div className="flex items-center gap-4">
+                <Input
+                  type="number"
+                  step="0.1"
+                  placeholder="Registra la temperatura"
+                  value={props.basalTemperature || ''}
+                  onChange={(e) => onChange?.({ basalTemperature: parseFloat(e.target.value) || 0 })}
+                />
+                <span>°C</span>
+              </div>
             </TabsContent>
           </Tabs>
         </CardContent>
