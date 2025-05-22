@@ -8,10 +8,56 @@ import {
   medicalInfo,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, and, desc } from "drizzle-orm";
+import { eq, and, desc, isNull } from "drizzle-orm";
 import session from "express-session";
 import PgSession from "connect-pg-simple";
 import { pool } from "./db";
+
+// Function to update measurements
+export async function updateMeasurements(
+  userId: number,
+  date: Date,
+  measurements: {
+    waterIntake?: number;
+    weight?: number;
+    basalTemperature?: number;
+  }
+) {
+  return await db
+    .update(diaryEntries)
+    .set(measurements)
+    .where(
+      and(
+        eq(diaryEntries.userId, userId),
+        eq(diaryEntries.date, date)
+      )
+    )
+    .returning();
+}
+
+// Function to get measurements history
+export async function getMeasurementsHistory(
+  userId: number,
+  startDate: Date,
+  endDate: Date
+) {
+  return await db
+    .select({
+      date: diaryEntries.date,
+      waterIntake: diaryEntries.waterIntake,
+      weight: diaryEntries.weight,
+      basalTemperature: diaryEntries.basalTemperature,
+    })
+    .from(diaryEntries)
+    .where(
+      and(
+        eq(diaryEntries.userId, userId),
+        diaryEntries.date.gte(startDate),
+        diaryEntries.date.lte(endDate)
+      )
+    )
+    .orderBy(desc(diaryEntries.date));
+}
 
 const PgStore = PgSession(session);
 
