@@ -1,0 +1,76 @@
+
+endodiary-app      | 10:04:51 AM [express] GET /api/user 304 in 5ms :: {"id":1,"username":"test_1","email":"tt@tt.rr","dis…
+endodiary-app      | TypeError: storage.getDiaryEntriesByUserId is not a function
+endodiary-app      |     at <anonymous> (/app/server/routes.ts:59:37)
+endodiary-app      |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+endodiary-app      |     at next (/app/node_modules/express/lib/router/route.js:149:13)
+endodiary-app      |     at isAuthenticated (/app/server/routes.ts:51:14)
+endodiary-app      |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+endodiary-app      |     at next (/app/node_modules/express/lib/router/route.js:149:13)
+endodiary-app      |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:119:3)
+endodiary-app      |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+endodiary-app      |     at /app/node_modules/express/lib/router/index.js:284:15
+endodiary-app      |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+endodiary-app      |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+endodiary-app      |     at strategy.pass (/app/node_modules/passport/lib/middleware/authenticate.js:355:9)
+endodiary-app      |     at /app/node_modules/passport/lib/strategies/session.js:120:12
+endodiary-app      |     at pass (/app/node_modules/passport/lib/authenticator.js:352:31)
+endodiary-app      |     at deserialized (/app/node_modules/passport/lib/authenticator.js:364:7)
+endodiary-app      |     at <anonymous> (/app/server/auth.ts:79:7)
+endodiary-app      |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+endodiary-app      | TypeError: storage.getDiaryEntriesByUserId is not a function
+endodiary-app      |     at <anonymous> (/app/server/routes.ts:59:37)
+endodiary-app      |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+endodiary-app      |     at next (/app/node_modules/express/lib/router/route.js:149:13)
+endodiary-app      |     at isAuthenticated (/app/server/routes.ts:51:14)
+endodiary-app      |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+endodiary-app      |     at next (/app/node_modules/express/lib/router/route.js:149:13)
+endodiary-app      |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:119:3)
+endodiary-app      |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+endodiary-app      |     at /app/node_modules/express/lib/router/index.js:284:15
+endodiary-app      |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+endodiary-app       |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+endodiary-app       |     at strategy.pass (/app/node_modules/passport/lib/middleware/authenticate.js:355:9)
+endodiary-app       |     at /app/node_modules/passport/lib/strategies/session.js:120:12
+endodiary-app       |     at pass (/app/node_modules/passport/lib/authenticator.js:352:31)
+endodiary-app       |     at deserialized (/app/node_modules/passport/lib/authenticator.js:364:7)
+endodiary-app       |     at <anonymous> (/app/server/auth.ts:79:7)
+endodiary-app       |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+endodiary-app       | Files in the public directory are served at the root path.
+endodiary-app       | Instead of /client/public/images/logo.png, use /images/logo.png.
+endodiary-app       | TypeError: storage.getDiaryEntriesByUserId is not a function
+endodiary-app       |     at <anonymous> (/app/server/routes.ts:59:37)
+endodiary-app       |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+endodiary-app       |     at next (/app/node_modules/express/lib/router/route.js:149:13)
+endodiary-app       |     at isAuthenticated (/app/server/routes.ts:51:14)
+endodiary-app       |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+endodiary-app       |     at next (/app/node_modules/express/lib/router/route.js:149:13)
+endodiary-app       |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:119:3)
+endodiary-app       |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+endodiary-app       |     at /app/node_modules/express/lib/router/index.js:284:15
+endodiary-app       |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+endodiary-app       |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+endodiary-app       |     at strategy.pass (/app/node_modules/passport/lib/middleware/authenticate.js:355:9)
+endodiary-app       |     at /app/node_modules/passport/lib/strategies/session.js:120:12
+endodiary-app       |     at pass (/app/node_modules/passport/lib/authenticator.js:352:31)
+endodiary-app       |     at deserialized (/app/node_modules/passport/lib/authenticator.js:364:7)
+endodiary-app       |     at <anonymous> (/app/server/auth.ts:79:7)
+endodiary-app       |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+endodiary-app       | TypeError: storage.getDiaryEntriesByUserId is not a function
+endodiary-app       |     at <anonymous> (/app/server/routes.ts:59:37)
+endodiary-app       |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+endodiary-app       |     at next (/app/node_modules/express/lib/router/route.js:149:13)
+endodiary-app       |     at isAuthenticated (/app/server/routes.ts:51:14)
+endodiary-app       |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+endodiary-app       |     at next (/app/node_modules/express/lib/router/route.js:149:13)
+endodiary-app       |     at Route.dispatch (/app/node_modules/express/lib/router/route.js:119:3)
+endodiary-app       |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+endodiary-app       |     at /app/node_modules/express/lib/router/index.js:284:15
+endodiary-app       |     at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+endodiary-app       |     at next (/app/node_modules/express/lib/router/index.js:280:10)
+endodiary-app       |     at strategy.pass (/app/node_modules/passport/lib/middleware/authenticate.js:355:9)
+endodiary-app       |     at /app/node_modules/passport/lib/strategies/session.js:120:12
+endodiary-app       |     at pass (/app/node_modules/passport/lib/authenticator.js:352:31)
+endodiary-app       |     at deserialized (/app/node_modules/passport/lib/authenticator.js:364:7)
+endodiary-app       |     at <anonymous> (/app/server/auth.ts:79:7)
+endodiary-app       |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
