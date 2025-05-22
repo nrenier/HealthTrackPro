@@ -500,9 +500,10 @@ export default function AdditionalInfoTracker({
                       value={waterIntake === undefined || waterIntake === null ? "" : waterIntake}
                       onChange={(e) => {
                         const value = e.target.value;
-                        onChange?.({
-                          waterIntake: value === "" ? undefined : isNaN(parseFloat(value)) ? undefined : parseFloat(value),
-                        });
+                        const numValue = value === "" ? undefined : Number(value);
+                        if (!isNaN(numValue as number) || numValue === undefined) {
+                          onChange?.({ waterIntake: numValue });
+                        }
                       }}
                       className="w-24"
                     />
@@ -523,9 +524,10 @@ export default function AdditionalInfoTracker({
                       value={weight === undefined || weight === null ? "" : weight}
                       onChange={(e) => {
                         const value = e.target.value;
-                        onChange?.({
-                          weight: value === "" ? undefined : isNaN(parseFloat(value)) ? undefined : parseFloat(value)
-                        });
+                        const numValue = value === "" ? undefined : Number(value);
+                        if (!isNaN(numValue as number) || numValue === undefined) {
+                          onChange?.({ weight: numValue });
+                        }
                       }}
                     />
                     <span>kg</span>
@@ -545,9 +547,10 @@ export default function AdditionalInfoTracker({
                       value={basalTemperature === undefined || basalTemperature === null ? "" : basalTemperature}
                       onChange={(e) => {
                         const value = e.target.value;
-                        onChange?.({
-                          basalTemperature: value === "" ? undefined : isNaN(parseFloat(value)) ? undefined : parseFloat(value),
-                        });
+                        const numValue = value === "" ? undefined : Number(value);
+                        if (!isNaN(numValue as number) || numValue === undefined) {
+                          onChange?.({ basalTemperature: numValue });
+                        }
                       }}
                     />
                     <span>°C</span>
