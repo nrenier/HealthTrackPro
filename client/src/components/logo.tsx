@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 
 interface LogoProps {
@@ -6,7 +5,7 @@ interface LogoProps {
   size?: 'small' | 'medium' | 'large';
 }
 
-export default function Logo({ className = '', size = 'medium' }: LogoProps) {
+export function Logo({ className = '', size = 'medium' }: LogoProps) {
   const sizeClasses = {
     small: 'h-6',
     medium: 'h-8',
@@ -46,3 +45,6 @@ export default function Logo({ className = '', size = 'medium' }: LogoProps) {
     </div>
   );
 }
+
+// Esporta il componente come default per compatibilità
+export default Logo;
