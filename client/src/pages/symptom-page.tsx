@@ -18,6 +18,7 @@ import BottomNavigation from "@/components/bottom-navigation";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function SymptomPage() {
   const params = useParams<{ date: string }>();
@@ -244,23 +245,37 @@ export default function SymptomPage() {
           <div className="space-y-6">
             <MoodTracker value={mood} onChange={setMood} />
 
-            <FlowTracker value={flow} onChange={setFlow} />
+            <Tabs defaultValue="symptoms" className="mb-6">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="symptoms">Sintomi</TabsTrigger>
+                <TabsTrigger value="additional">Altre Info</TabsTrigger>
+              </TabsList>
 
-            <PainTracker 
-              painSymptoms={painSymptoms} 
-              bloodPresence={bloodPresence}
-              onPainChange={handlePainChange}
-              onBloodChange={handleBloodChange}
-            />
+              <TabsContent value="symptoms" className="space-y-6">
+                <FlowTracker 
+                  flow={flow}
+                  onChange={setFlow}
+                />
 
-            <AdditionalInfoTracker
-              pregnancyTest={pregnancyTest}
-              physicalActivities={physicalActivities}
-              medicines={medicines}
-              onPregnancyTestChange={setPregnancyTest}
-              onPhysicalActivitiesChange={setPhysicalActivities}
-              onMedicinesChange={setMedicines}
-            />
+                <PainTracker 
+                  painSymptoms={painSymptoms} 
+                  bloodPresence={bloodPresence}
+                  onPainChange={handlePainChange}
+                  onBloodChange={handleBloodChange}
+                />
+              </TabsContent>
+
+              <TabsContent value="additional" className="space-y-6">
+                <AdditionalInfoTracker
+                  pregnancyTest={pregnancyTest}
+                  physicalActivities={physicalActivities}
+                  medicines={medicines}
+                  onPregnancyTestChange={setPregnancyTest}
+                  onPhysicalActivitiesChange={setPhysicalActivities}
+                  onMedicinesChange={setMedicines}
+                />
+              </TabsContent>
+            </Tabs>
 
             <div className="mb-6">
               <h2 className="text-base font-medium mb-3">Note</h2>
