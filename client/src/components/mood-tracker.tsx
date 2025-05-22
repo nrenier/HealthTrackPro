@@ -43,7 +43,7 @@ export default function MoodTracker({ value, onChange }: MoodTrackerProps) {
               <img
                 src={symptom.icon}
                 alt={symptom.label}
-                className="w-8 h-8 object-contain rounded-full"
+                className="w-12 h-12 object-contain rounded-full"
               />
             </div>
             <span className="text-xs mt-1 text-center max-w-[80px]">
