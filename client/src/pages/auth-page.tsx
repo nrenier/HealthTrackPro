@@ -250,10 +250,10 @@ export default function AuthPage() {
             </TabsContent>
           </Tabs>
 
-          <div className="flex items-center my-6">
-            <Separator className="flex-grow" />
+          <div className="flex items-center justify-center my-6 w-full">
+            <Separator className="flex-grow max-w-[42%]" />
             <span className="px-4 text-sm text-muted-foreground">or</span>
-            <Separator className="flex-grow" />
+            <Separator className="flex-grow max-w-[42%]" />
           </div>
 
           <div className="space-y-3">
