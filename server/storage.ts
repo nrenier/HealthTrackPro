@@ -74,15 +74,17 @@ export class Storage {
 
   async updateDiaryEntry(id: number, entry: Partial<InsertDiaryEntry>): Promise<DiaryEntry | undefined> {
     try {
+      console.log("Updating diary entry with:", { id, entry });
       const [updatedEntry] = await db
         .update(diaryEntries)
         .set({
           ...entry,
-          medicines: entry.medicines !== undefined ? entry.medicines : undefined,
-          visits: entry.visits !== undefined ? entry.visits : undefined
+          medicines: entry.medicines !== undefined ? JSON.stringify(entry.medicines) : undefined,
+          visits: entry.visits !== undefined ? JSON.stringify(entry.visits) : undefined
         })
         .where(eq(diaryEntries.id, id))
         .returning();
+      console.log("Updated entry:", updatedEntry);
       return updatedEntry;
     } catch (err) {
       console.error("Error updating diary entry:", err);
