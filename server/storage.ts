@@ -79,8 +79,8 @@ export class Storage {
         .update(diaryEntries)
         .set({
           ...entry,
-          medicines: entry.medicines !== undefined ? JSON.stringify(entry.medicines) : undefined,
-          visits: entry.visits !== undefined ? JSON.stringify(entry.visits) : undefined
+          medicines: entry.medicines !== undefined ? entry.medicines : undefined,
+          visits: entry.visits !== undefined ? entry.visits : undefined
         })
         .where(eq(diaryEntries.id, id))
         .returning();
