@@ -43,9 +43,6 @@ export const diaryEntries = pgTable("diary_entries", {
   bloodInUrine: boolean("blood_in_urine").default(false),
   
   // Additional info data
-  waterIntake: integer("water_intake").default(0),
-  weight: integer("weight"),
-  basalTemperature: integer("basal_temperature"),
   pregnancyTest: pregnancyTestEnum("pregnancy_test").default("none"),
   physicalActivities: jsonb("physical_activities").$type<string[]>().default([]),
   medicines: jsonb("medicines").$type<Array<{
