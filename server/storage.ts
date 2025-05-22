@@ -73,12 +73,20 @@ export class Storage {
   }
 
   async updateDiaryEntry(id: number, entry: Partial<InsertDiaryEntry>): Promise<DiaryEntry | undefined> {
-    const [updatedEntry] = await db
-      .update(diaryEntries)
-      .set(entry)
-      .where(eq(diaryEntries.id, id))
-      .returning();
-    return updatedEntry;
+    try {
+      const [updatedEntry] = await db
+        .update(diaryEntries)
+        .set({
+          ...entry,
+          visits: entry.visits ? entry.visits : undefined
+        })
+        .where(eq(diaryEntries.id, id))
+        .returning();
+      return updatedEntry;
+    } catch (err) {
+      console.error("Error updating diary entry:", err);
+      throw new Error("Failed to update diary entry");
+    }
   }
 
   async deleteDiaryEntry(id: number): Promise<boolean> {
