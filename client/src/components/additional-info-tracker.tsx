@@ -184,6 +184,199 @@ export default function AdditionalInfoTracker({
   return (
     <div className="mb-6">
       <div className="space-y-4">
+
+        <h2 className="text-base font-medium mb-3">Altre informazioni</h2>
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle>Altre informazioni</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Tabs value={activeTab} onValueChange={setActiveTab}>
+              <TabsList className="grid w-full grid-cols-3 gap-2 mb-4">
+                <TabsTrigger
+                  value="pregnancy"
+                  className="flex flex-col h-auto py-2 whitespace-normal"
+                >
+                  Test di gravidanza
+                </TabsTrigger>
+                <TabsTrigger
+                  value="medicines"
+                  className="flex flex-col h-auto py-2 whitespace-normal"
+                >
+                  Medicinali
+                </TabsTrigger>
+                <TabsTrigger
+                  value="visits"
+                  className="flex flex-col h-auto py-2 whitespace-normal"
+                >
+                  Visite Mediche
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="pregnancy" className="space-y-4">
+                <div className="grid grid-cols-2 gap-2">
+                  <Button
+                    variant={pregnancyTest === "none" ? "default" : "outline"}
+                    onClick={() => onPregnancyTestChange("none")}
+                    className="h-16 flex flex-col items-center justify-center"
+                  >
+                    <span className="text-xl mb-1">🧪</span>
+                    <span className="text-xs">Nessun test</span>
+                  </Button>
+                  <Button
+                    variant={pregnancyTest === "positive" ? "default" : "outline"}
+                    onClick={() => onPregnancyTestChange("positive")}
+                    className="h-16 flex flex-col items-center justify-center"
+                  >
+                    <span className="text-xl mb-1">✅</span>
+                    <span className="text-xs">Positivo</span>
+                  </Button>
+                  <Button
+                    variant={pregnancyTest === "negative" ? "default" : "outline"}
+                    onClick={() => onPregnancyTestChange("negative")}
+                    className="h-16 flex flex-col items-center justify-center"
+                  >
+                    <span className="text-xl mb-1">❌</span>
+                    <span className="text-xs">Negativo</span>
+                  </Button>
+                  <Button
+                    variant={pregnancyTest === "faint" ? "default" : "outline"}
+                    onClick={() => onPregnancyTestChange("faint")}
+                    className="h-16 flex flex-col items-center justify-center"
+                  >
+                    <span className="text-xl mb-1">〰️</span>
+                    <span className="text-xs">Linea sbiadita</span>
+                  </Button>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="medicines" className="space-y-4">
+                <div className="flex space-x-2 mb-4">
+                  <Input
+                    placeholder="Nome del medicinale"
+                    value={newMedicine.name}
+                    onChange={(e) =>
+                      setNewMedicine({ ...newMedicine, name: e.target.value })
+                    }
+                  />
+                  <Input
+                    placeholder="Dosaggio"
+                    value={newMedicine.dosage}
+                    onChange={(e) =>
+                      setNewMedicine({ ...newMedicine, dosage: e.target.value })
+                    }
+                  />
+                  <Button onClick={addMedicine} type="button" size="icon">
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                </div>
+
+                {medicines.length === 0 ? (
+                  <div className="text-center text-muted-foreground text-sm p-4">
+                    Nessun medicinale aggiunto
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {medicines.map((med) => (
+                      <div
+                        key={med.id}
+                        className="flex items-center justify-between bg-muted p-3 rounded-md"
+                      >
+                        <div>
+                          <p className="font-medium">{med.name}</p>
+                          {med.dosage && (
+                            <p className="text-xs text-muted-foreground">
+                              {med.dosage}
+                            </p>
+                          )}
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => removeMedicine(med.id)}
+                        >
+                          Rimuovi
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </TabsContent>
+
+              <TabsContent value="visits" className="space-y-4">
+                <div className="space-y-3 mb-4">
+                  <div className="flex space-x-2">
+                    <Input
+                      type="text"
+                      placeholder="Tipo di visita"
+                      value={newVisit?.type || ""}
+                      onChange={(e) =>
+                        setNewVisit({ ...newVisit, type: e.target.value })
+                      }
+                      className="flex-grow"
+                    />
+                    <Input
+                      type="file"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      onChange={(e) =>
+                        setNewVisit({
+                          ...newVisit,
+                          report: e.target.files?.[0],
+                        })
+                      }
+                    />
+                    <Button onClick={addVisit} type="button" size="icon">
+                      <Plus className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+
+                {visits.length === 0 ? (
+                  <div className="text-center text-muted-foreground text-sm p-4">
+                    Nessuna visita aggiunta
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {visits.map((visit) => (
+                      <div
+                        key={visit.id}
+                        className="flex items-center justify-between bg-muted p-3 rounded-md"
+                      >
+                        <div>
+                          <p className="font-medium">{visit.type}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {new Date(visit.date).toLocaleDateString()}
+                          </p>
+                        </div>
+                        <div className="flex gap-2">
+                          {visit.reportUrl && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() =>
+                                window.open(visit.reportUrl, "_blank")
+                              }
+                            >
+                              Vedi referto
+                            </Button>
+                          )}
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeVisit(visit.id)}
+                          >
+                            Rimuovi
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
+
         <h2 className="text-base font-medium mb-3">Attività fisica</h2>
         <Card>
           <CardContent className="pt-4">
@@ -353,319 +546,6 @@ export default function AdditionalInfoTracker({
                 </div>
               </div>
             </div>
-          </CardContent>
-        </Card>
-
-        <h2 className="text-base font-medium mb-3 mt-4">Altre informazioni</h2>
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle>Altre informazioni</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="grid w-full grid-cols-4 gap-2 mb-4">
-                <TabsTrigger
-                  value="pregnancy"
-                  className="flex flex-col h-auto py-2 whitespace-normal"
-                >
-                  Test di gravidanza
-                </TabsTrigger>
-                <TabsTrigger
-                  value="activity"
-                  className="flex flex-col h-auto py-2 whitespace-normal"
-                >
-                  Attività fisica
-                </TabsTrigger>
-                <TabsTrigger
-                  value="medicines"
-                  className="flex flex-col h-auto py-2 whitespace-normal"
-                >
-                  Medicinali
-                </TabsTrigger>
-                <TabsTrigger
-                  value="visits"
-                  className="flex flex-col h-auto py-2 whitespace-normal"
-                >
-                  Visite Mediche
-                </TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="pregnancy" className="space-y-4">
-                <div className="grid grid-cols-2 gap-2">
-                  <Button
-                    variant={pregnancyTest === "none" ? "default" : "outline"}
-                    onClick={() => onPregnancyTestChange("none")}
-                    className="h-16 flex flex-col items-center justify-center"
-                  >
-                    <span className="text-xl mb-1">🧪</span>
-                    <span className="text-xs">Nessun test</span>
-                  </Button>
-                  <Button
-                    variant={
-                      pregnancyTest === "positive" ? "default" : "outline"
-                    }
-                    onClick={() => onPregnancyTestChange("positive")}
-                    className="h-16 flex flex-col items-center justify-center"
-                  >
-                    <span className="text-xl mb-1">✅</span>
-                    <span className="text-xs">Positivo</span>
-                  </Button>
-                  <Button
-                    variant={
-                      pregnancyTest === "negative" ? "default" : "outline"
-                    }
-                    onClick={() => onPregnancyTestChange("negative")}
-                    className="h-16 flex flex-col items-center justify-center"
-                  >
-                    <span className="text-xl mb-1">❌</span>
-                    <span className="text-xs">Negativo</span>
-                  </Button>
-                  <Button
-                    variant={pregnancyTest === "faint" ? "default" : "outline"}
-                    onClick={() => onPregnancyTestChange("faint")}
-                    className="h-16 flex flex-col items-center justify-center"
-                  >
-                    <span className="text-xl mb-1">〰️</span>
-                    <span className="text-xs">Linea sbiadita</span>
-                  </Button>
-                </div>
-              </TabsContent>
-
-              <TabsContent value="activity" className="space-y-4">
-                <div className="grid grid-cols-3 gap-2">
-                  <Button
-                    variant={
-                      physicalActivities.includes("none")
-                        ? "default"
-                        : "outline"
-                    }
-                    onClick={() => toggleActivity("none")}
-                    className="h-16 flex flex-col items-center justify-center"
-                  >
-                    <span className="text-xl mb-1">🛋️</span>
-                    <span className="text-xs">Nessuna attività</span>
-                  </Button>
-                  <Button
-                    variant={
-                      physicalActivities.includes("yoga")
-                        ? "default"
-                        : "outline"
-                    }
-                    onClick={() => toggleActivity("yoga")}
-                    className="h-16 flex flex-col items-center justify-center"
-                  >
-                    <span className="text-xl mb-1">🧘‍♀️</span>
-                    <span className="text-xs">Yoga</span>
-                  </Button>
-                  <Button
-                    variant={
-                      physicalActivities.includes("gym") ? "default" : "outline"
-                    }
-                    onClick={() => toggleActivity("gym")}
-                    className="h-16 flex flex-col items-center justify-center"
-                  >
-                    <span className="text-xl mb-1">🏋️‍♀️</span>
-                    <span className="text-xs">Palestra</span>
-                  </Button>
-                  <Button
-                    variant={
-                      physicalActivities.includes("aerobics")
-                        ? "default"
-                        : "outline"
-                    }
-                    onClick={() => toggleActivity("aerobics")}
-                    className="h-16 flex flex-col items-center justify-center"
-                  >
-                    <span className="text-xl mb-1">💃</span>
-                    <span className="text-xs">Aerobica e danza</span>
-                  </Button>
-                  <Button
-                    variant={
-                      physicalActivities.includes("swimming")
-                        ? "default"
-                        : "outline"
-                    }
-                    onClick={() => toggleActivity("swimming")}
-                    className="h-16 flex flex-col items-center justify-center"
-                  >
-                    <span className="text-xl mb-1">🏊‍♀️</span>
-                    <span className="text-xs">Nuoto</span>
-                  </Button>
-                  <Button
-                    variant={
-                      physicalActivities.includes("team-sport")
-                        ? "default"
-                        : "outline"
-                    }
-                    onClick={() => toggleActivity("team-sport")}
-                    className="h-16 flex flex-col items-center justify-center"
-                  >
-                    <span className="text-xl mb-1">🏐</span>
-                    <span className="text-xs">Sport di squadra</span>
-                  </Button>
-                  <Button
-                    variant={
-                      physicalActivities.includes("running")
-                        ? "default"
-                        : "outline"
-                    }
-                    onClick={() => toggleActivity("running")}
-                    className="h-16 flex flex-col items-center justify-center"
-                  >
-                    <span className="text-xl mb-1">🏃‍♀️</span>
-                    <span className="text-xs">Corsa</span>
-                  </Button>
-                  <Button
-                    variant={
-                      physicalActivities.includes("cycling")
-                        ? "default"
-                        : "outline"
-                    }
-                    onClick={() => toggleActivity("cycling")}
-                    className="h-16 flex flex-col items-center justify-center"
-                  >
-                    <span className="text-xl mb-1">🚴‍♀️</span>
-                    <span className="text-xs">Bicicletta</span>
-                  </Button>
-                  <Button
-                    variant={
-                      physicalActivities.includes("walking")
-                        ? "default"
-                        : "outline"
-                    }
-                    onClick={() => toggleActivity("walking")}
-                    className="h-16 flex flex-col items-center justify-center"
-                  >
-                    <span className="text-xl mb-1">🚶‍♀️</span>
-                    <span className="text-xs">Camminare</span>
-                  </Button>
-                </div>
-              </TabsContent>
-
-              <TabsContent value="medicines" className="space-y-4">
-                <div className="flex space-x-2 mb-4">
-                  <Input
-                    placeholder="Nome del medicinale"
-                    value={newMedicine.name}
-                    onChange={(e) =>
-                      setNewMedicine({ ...newMedicine, name: e.target.value })
-                    }
-                  />
-                  <Input
-                    placeholder="Dosaggio"
-                    value={newMedicine.dosage}
-                    onChange={(e) =>
-                      setNewMedicine({ ...newMedicine, dosage: e.target.value })
-                    }
-                  />
-                  <Button onClick={addMedicine} type="button" size="icon">
-                    <Plus className="h-4 w-4" />
-                  </Button>
-                </div>
-
-                {medicines.length === 0 ? (
-                  <div className="text-center text-muted-foreground text-sm p-4">
-                    Nessun medicinale aggiunto
-                  </div>
-                ) : (
-                  <div className="space-y-2">
-                    {medicines.map((med) => (
-                      <div
-                        key={med.id}
-                        className="flex items-center justify-between bg-muted p-3 rounded-md"
-                      >
-                        <div>
-                          <p className="font-medium">{med.name}</p>
-                          {med.dosage && (
-                            <p className="text-xs text-muted-foreground">
-                              {med.dosage}
-                            </p>
-                          )}
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => removeMedicine(med.id)}
-                        >
-                          Rimuovi
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </TabsContent>
-
-              <TabsContent value="visits" className="space-y-4">
-                <div className="space-y-3 mb-4">
-                  <div className="flex space-x-2">
-                    <Input
-                      type="text"
-                      placeholder="Tipo di visita"
-                      value={newVisit?.type || ""}
-                      onChange={(e) =>
-                        setNewVisit({ ...newVisit, type: e.target.value })
-                      }
-                      className="flex-grow"
-                    />
-                    <Input
-                      type="file"
-                      accept=".pdf,.jpg,.jpeg,.png"
-                      onChange={(e) =>
-                        setNewVisit({
-                          ...newVisit,
-                          report: e.target.files?.[0],
-                        })
-                      }
-                    />
-                    <Button onClick={addVisit} type="button" size="icon">
-                      <Plus className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-
-                {visits.length === 0 ? (
-                  <div className="text-center text-muted-foreground text-sm p-4">
-                    Nessuna visita aggiunta
-                  </div>
-                ) : (
-                  <div className="space-y-2">
-                    {visits.map((visit) => (
-                      <div
-                        key={visit.id}
-                        className="flex items-center justify-between bg-muted p-3 rounded-md"
-                      >
-                        <div>
-                          <p className="font-medium">{visit.type}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {new Date(visit.date).toLocaleDateString()}
-                          </p>
-                        </div>
-                        <div className="flex gap-2">
-                          {visit.reportUrl && (
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() =>
-                                window.open(visit.reportUrl, "_blank")
-                              }
-                            >
-                              Vedi referto
-                            </Button>
-                          )}
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => removeVisit(visit.id)}
-                          >
-                            Rimuovi
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </TabsContent>
-            </Tabs>
           </CardContent>
         </Card>
       </div>
