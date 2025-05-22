@@ -50,7 +50,11 @@ export default function AdditionalInfoTracker({
   medicines,
   onPregnancyTestChange,
   onPhysicalActivitiesChange,
-  onMedicinesChange
+  onMedicinesChange,
+  onChange,
+  waterIntake,
+  weight,
+  basalTemperature
 }: AdditionalInfoTrackerProps) {
   const [newMedicine, setNewMedicine] = useState<{ name: string; dosage: string }>({ name: '', dosage: '' });
   const [visits, setVisits] = useState<Array<{ id: number; type: string; date: string; reportUrl?: string }>>([]);
@@ -105,19 +109,19 @@ export default function AdditionalInfoTracker({
       // Gestione Visite mediche
       const addVisit = async () => {
         if (!newVisit.type) return;
-        
+
         let reportFileName;
         if (newVisit.report) {
           const formData = new FormData();
           formData.append('report', newVisit.report);
-          
+
           try {
             const res = await fetch('/api/upload-report', {
               method: 'POST',
               credentials: 'include',
               body: formData
             });
-            
+
             if (!res.ok) throw new Error('Upload failed');
             const data = await res.json();
             reportFileName = data.fileName;
@@ -153,9 +157,9 @@ export default function AdditionalInfoTracker({
           const res = await fetch(`/api/reports/${fileName}`, {
             credentials: 'include'
           });
-          
+
           if (!res.ok) throw new Error('Download failed');
-          
+
           const blob = await res.blob();
           const url = window.URL.createObjectURL(blob);
           const a = document.createElement('a');
@@ -417,7 +421,7 @@ export default function AdditionalInfoTracker({
                 <Input
                   type="number"
                   placeholder="0"
-                  value={props.waterIntake || ''}
+                  value={waterIntake || ''}
                   onChange={(e) => onChange?.({ waterIntake: parseFloat(e.target.value) || 0 })}
                   className="w-24"
                 />
@@ -431,7 +435,7 @@ export default function AdditionalInfoTracker({
                   type="number"
                   step="0.1"
                   placeholder="Registra il tuo peso"
-                  value={props.weight || ''}
+                  value={weight || ''}
                   onChange={(e) => onChange?.({ weight: parseFloat(e.target.value) || 0 })}
                 />
                 <span>kg</span>
@@ -444,7 +448,7 @@ export default function AdditionalInfoTracker({
                   type="number"
                   step="0.1"
                   placeholder="Registra la temperatura"
-                  value={props.basalTemperature || ''}
+                  value={basalTemperature || ''}
                   onChange={(e) => onChange?.({ basalTemperature: parseFloat(e.target.value) || 0 })}
                 />
                 <span>°C</span>
