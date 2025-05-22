@@ -207,7 +207,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      if (req.body.visits) {
+      if (req.body.visits !== undefined) {
         await storage.updateDiaryEntry(existingEntry.id, {
           visits: req.body.visits
         });
