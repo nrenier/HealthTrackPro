@@ -215,25 +215,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       if (req.body.visits !== undefined) {
         console.log('Received visits data:', req.body.visits);
-        console.log('Is Array?', Array.isArray(req.body.visits));
         
-        if (Array.isArray(req.body.visits)) {
-          console.log('Visit objects:', req.body.visits.map(v => ({ 
-            id: v?.id, 
-            type: v?.type, 
-            date: v?.date, 
-            reportFileName: v?.reportFileName 
-          })));
-        }
-        
+        // Keep existing visits if the new array is empty
+        const visitsToUpdate = Array.isArray(req.body.visits) && req.body.visits.length > 0
+          ? req.body.visits.map(visit => ({
+              id: visit?.id || Date.now(),
+              type: visit?.type || '',
+              date: visit?.date || new Date().toISOString().split('T')[0],
+              reportFileName: visit?.reportFileName
+            }))
+          : existingEntry.visits;
+
         const updatedEntry = await storage.updateDiaryEntry(existingEntry.id, {
-          visits: Array.isArray(req.body.visits) ? req.body.visits.map(visit => ({
-            id: visit?.id || Date.now(),
-            type: visit?.type || '',
-            date: visit?.date || new Date().toISOString().split('T')[0],
-            reportFileName: visit?.reportFileName
-          })) : []
+          visits: visitsToUpdate
         });
+        
         if (!updatedEntry) {
           throw new Error("Failed to update visits");
         }
