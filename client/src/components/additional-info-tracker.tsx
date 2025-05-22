@@ -48,7 +48,6 @@ export default function AdditionalInfoTracker({
   onPhysicalActivitiesChange,
   onMedicinesChange
 }: AdditionalInfoTrackerProps) {
-  const [medicines, setMedicines] = useState<Array<{ id: number; name: string; dosage: string }>>([]);
   const [newMedicine, setNewMedicine] = useState<{ name: string; dosage: string }>({ name: '', dosage: '' });
   const [visits, setVisits] = useState<Array<{ id: number; type: string; date: string; reportUrl?: string }>>([]);
   const [newVisit, setNewVisit] = useState<{ type: string; date: string; report?: File | null }>({ type: '', date: '' });
