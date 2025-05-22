@@ -38,6 +38,7 @@ interface AdditionalInfoTrackerProps {
   onPregnancyTestChange: (value: PregnancyTestType) => void;
   onPhysicalActivitiesChange: (activities: PhysicalActivityType[]) => void;
   onMedicinesChange: (medicines: Medicine[]) => void;
+  onChange?: (updates: { visits?: any[] }) => void;
 }
 
 export default function AdditionalInfoTracker({
@@ -132,7 +133,9 @@ export default function AdditionalInfoTracker({
 
         const updatedVisits = [...visits, visit];
         setVisits(updatedVisits);
-        onChange?.({ visits: updatedVisits });
+        if (onChange) {
+          onChange({ visits: updatedVisits });
+        }
         setNewVisit({ type: '', date: '', report: null });
       };
 
