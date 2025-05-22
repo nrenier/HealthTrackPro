@@ -32,6 +32,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     pregnancy_test pregnancy_test DEFAULT 'none',
     physical_activities JSONB DEFAULT '["none"]',
     medicines JSONB DEFAULT '[]',
+    visits JSONB DEFAULT '[]',
     created_at TIMESTAMP NOT NULL DEFAULT NOW()
   );
 
