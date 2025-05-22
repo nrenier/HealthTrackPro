@@ -254,14 +254,72 @@ export default function AdditionalInfoTracker({
           </CardContent>
         </Card>
 
-        <h2 className="text-base font-medium mb-3">Altre informazioni</h2>
+        <h2 className="text-base font-medium mb-3">Misurazioni</h2>
+        <Card>
+          <CardContent className="pt-4">
+            <div className="grid gap-4">
+              <div className="flex items-center gap-4">
+                <span className="text-2xl">💧</span>
+                <div className="flex-1">
+                  <Label>Acqua (L)</Label>
+                  <div className="flex items-center gap-4">
+                    <Input
+                      type="number"
+                      placeholder="0"
+                      value={waterIntake || ''}
+                      onChange={(e) => onChange?.({ waterIntake: parseFloat(e.target.value) || 0 })}
+                      className="w-24"
+                    />
+                    <span>/ 2,25 L</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <span className="text-2xl">⚖️</span>
+                <div className="flex-1">
+                  <Label>Peso (kg)</Label>
+                  <div className="flex items-center gap-4">
+                    <Input
+                      type="number"
+                      step="0.1"
+                      placeholder="Registra il tuo peso"
+                      value={weight || ''}
+                      onChange={(e) => onChange?.({ weight: parseFloat(e.target.value) || 0 })}
+                    />
+                    <span>kg</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <span className="text-2xl">🌡️</span>
+                <div className="flex-1">
+                  <Label>Temperatura (°C)</Label>
+                  <div className="flex items-center gap-4">
+                    <Input
+                      type="number"
+                      step="0.1"
+                      placeholder="Registra la temperatura"
+                      value={basalTemperature || ''}
+                      onChange={(e) => onChange?.({ basalTemperature: parseFloat(e.target.value) || 0 })}
+                    />
+                    <span>°C</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <h2 className="text-base font-medium mb-3 mt-4">Altre informazioni</h2>
       <Card>
         <CardHeader className="pb-3">
           <CardTitle>Altre informazioni</CardTitle>
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-7 gap-2 mb-4">
+            <TabsList className="grid w-full grid-cols-4 gap-2 mb-4">
               <TabsTrigger value="pregnancy" className="flex flex-col h-auto py-2 whitespace-normal">
                 Test di gravidanza
               </TabsTrigger>
@@ -273,15 +331,6 @@ export default function AdditionalInfoTracker({
               </TabsTrigger>
               <TabsTrigger value="visits" className="flex flex-col h-auto py-2 whitespace-normal">
                 Visite Mediche
-              </TabsTrigger>
-              <TabsTrigger value="water" className="flex flex-col h-auto py-2 whitespace-normal">
-                Acqua
-              </TabsTrigger>
-              <TabsTrigger value="weight" className="flex flex-col h-auto py-2 whitespace-normal">
-                Peso
-              </TabsTrigger>
-              <TabsTrigger value="temperature" className="flex flex-col h-auto py-2 whitespace-normal">
-                Temperatura
               </TabsTrigger>
             </TabsList>
 
@@ -498,44 +547,7 @@ export default function AdditionalInfoTracker({
               )}
             </TabsContent>
 
-            <TabsContent value="water" className="space-y-4">
-              <div className="flex items-center gap-4">
-                <Input
-                  type="number"
-                  placeholder="0"
-                  value={waterIntake || ''}
-                  onChange={(e) => onChange?.({ waterIntake: parseFloat(e.target.value) || 0 })}
-                  className="w-24"
-                />
-                <span>/ 2,25 L</span>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="weight" className="space-y-4">
-              <div className="flex items-center gap-4">
-                <Input
-                  type="number"
-                  step="0.1"
-                  placeholder="Registra il tuo peso"
-                  value={weight || ''}
-                  onChange={(e) => onChange?.({ weight: parseFloat(e.target.value) || 0 })}
-                />
-                <span>kg</span>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="temperature" className="space-y-4">
-              <div className="flex items-center gap-4">
-                <Input
-                  type="number"
-                  step="0.1"
-                  placeholder="Registra la temperatura"
-                  value={basalTemperature || ''}
-                  onChange={(e) => onChange?.({ basalTemperature: parseFloat(e.target.value) || 0 })}
-                />
-                <span>°C</span>
-              </div>
-            </TabsContent>
+            
           </Tabs>
         </CardContent>
       </Card>
