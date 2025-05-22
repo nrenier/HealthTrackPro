@@ -9,10 +9,10 @@ interface MoodTrackerProps {
 
 export default function MoodTracker({ value, onChange }: MoodTrackerProps) {
   const symptoms = [
-    { id: "cramps", label: "Crampi", icon: "🔴" },
-    { id: "breast-pain", label: "Tensione al seno", icon: "🟣" },
-    { id: "back-pain", label: "Mal di schiena", icon: "🟡" },
-    { id: "bloating", label: "Gonfiore", icon: "⚪" }
+    { id: "cramps", label: "Crampi", icon: "/client/public/images/icon_1.png" },
+    { id: "breast-pain", label: "Tensione al seno", icon: "/client/public/images/icon_2.png" },
+    { id: "back-pain", label: "Mal di schiena", icon: "/client/public/images/icon_3.png" },
+    { id: "bloating", label: "Gonfiore", icon: "/client/public/images/icon_4.png" }
   ];
 
   return (
@@ -33,7 +33,7 @@ export default function MoodTracker({ value, onChange }: MoodTrackerProps) {
                   : "bg-neutral-100 border border-neutral-200"
               )}
             >
-              {symptom.icon}
+              <img src={symptom.icon} alt={symptom.label} className="w-8 h-8" />
             </div>
             <span className="text-xs mt-1 text-center max-w-[80px]">{symptom.label}</span>
           </button>
