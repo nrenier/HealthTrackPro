@@ -142,3 +142,11 @@ export type Medicine = {
   name: string;
   dosage: string;
 };
+
+export type MedicalVisit = {
+  id?: number;
+  date: string;
+  description: string;
+  doctorName: string;
+  reportPath?: string;
+};

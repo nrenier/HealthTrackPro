@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { 
   Card, CardContent, CardHeader, CardTitle 
@@ -55,16 +54,16 @@ export default function AdditionalInfoTracker({
   // Gestisce la selezione/deselezione delle attività fisiche
   const toggleActivity = (activity: PhysicalActivityType) => {
     const newActivities = [...physicalActivities];
-    
+
     if (activity === "none") {
       // Se è stato selezionato "nessuna attività", rimuovi tutte le altre
       onPhysicalActivitiesChange(["none"]);
       return;
     }
-    
+
     // Rimuovi "nessuna attività" se presente quando selezioni un'altra attività
     const filteredActivities = newActivities.filter(act => act !== "none");
-    
+
     const activityIndex = filteredActivities.indexOf(activity);
     if (activityIndex === -1) {
       // Aggiungi l'attività se non è presente
@@ -81,13 +80,13 @@ export default function AdditionalInfoTracker({
   // Aggiunge un nuovo medicinale
   const addMedicine = () => {
     if (newMedicine.name.trim() === "") return;
-    
+
     const medicine = {
       id: Date.now().toString(),
       name: newMedicine.name,
       dosage: newMedicine.dosage
     };
-    
+
     onMedicinesChange([...medicines, medicine]);
     setNewMedicine({ name: "", dosage: "" });
   };
@@ -109,8 +108,9 @@ export default function AdditionalInfoTracker({
               <TabsTrigger value="pregnancy">Test di gravidanza</TabsTrigger>
               <TabsTrigger value="activity">Attività fisica</TabsTrigger>
               <TabsTrigger value="medicines">Medicinali</TabsTrigger>
-            </TabsList>
-            
+          <TabsTrigger value="visits">Visite Mediche</TabsTrigger>
+        </TabsList>
+
             <TabsContent value="pregnancy" className="space-y-4">
               <div className="grid grid-cols-2 gap-2">
                 <Button 
@@ -147,7 +147,7 @@ export default function AdditionalInfoTracker({
                 </Button>
               </div>
             </TabsContent>
-            
+
             <TabsContent value="activity" className="space-y-4">
               <div className="grid grid-cols-3 gap-2">
                 <Button 
@@ -224,7 +224,7 @@ export default function AdditionalInfoTracker({
                 </Button>
               </div>
             </TabsContent>
-            
+
             <TabsContent value="medicines" className="space-y-4">
               <div className="flex space-x-2 mb-4">
                 <Input 
@@ -241,7 +241,7 @@ export default function AdditionalInfoTracker({
                   <Plus className="h-4 w-4" />
                 </Button>
               </div>
-              
+
               {medicines.length === 0 ? (
                 <div className="text-center text-muted-foreground text-sm p-4">
                   Nessun medicinale aggiunto
