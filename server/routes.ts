@@ -207,6 +207,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
+      if (req.body.visits) {
+        await storage.updateDiaryEntry(existingEntry.id, {
+          visits: req.body.visits
+        });
+      }
+
       // Ottieni l'entry aggiornato completo
       const finalEntry = await storage.getDiaryEntryById(existingEntry.id);
       
