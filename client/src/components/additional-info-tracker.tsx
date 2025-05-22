@@ -497,10 +497,10 @@ export default function AdditionalInfoTracker({
                     <Input
                       type="number"
                       placeholder="0"
-                      value={waterIntake || ""}
+                      value={waterIntake === undefined || waterIntake === null ? "" : waterIntake}
                       onChange={(e) =>
                         onChange?.({
-                          waterIntake: parseFloat(e.target.value) || 0,
+                          waterIntake: e.target.value === "" ? undefined : parseFloat(e.target.value),
                         })
                       }
                       className="w-24"
@@ -519,9 +519,11 @@ export default function AdditionalInfoTracker({
                       type="number"
                       step="0.1"
                       placeholder="Registra il tuo peso"
-                      value={weight || ""}
+                      value={weight === undefined || weight === null ? "" : weight}
                       onChange={(e) =>
-                        onChange?.({ weight: parseFloat(e.target.value) || 0 })
+                        onChange?.({ 
+                          weight: e.target.value === "" ? undefined : parseFloat(e.target.value)
+                        })
                       }
                     />
                     <span>kg</span>
@@ -538,10 +540,10 @@ export default function AdditionalInfoTracker({
                       type="number"
                       step="0.1"
                       placeholder="Registra la temperatura"
-                      value={basalTemperature || ""}
+                      value={basalTemperature === undefined || basalTemperature === null ? "" : basalTemperature}
                       onChange={(e) =>
                         onChange?.({
-                          basalTemperature: parseFloat(e.target.value) || 0,
+                          basalTemperature: e.target.value === "" ? undefined : parseFloat(e.target.value),
                         })
                       }
                     />
