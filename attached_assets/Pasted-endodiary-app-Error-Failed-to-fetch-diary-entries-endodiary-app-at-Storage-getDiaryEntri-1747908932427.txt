@@ -1,0 +1,58 @@
+endodiary-app  | Error: Failed to fetch diary entries
+endodiary-app  |     at Storage.getDiaryEntriesByUserId (/app/server/storage.ts:107:13)
+endodiary-app  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+endodiary-app  |     at async <anonymous> (/app/server/routes.ts:59:23)
+endodiary-app  | Error fetching diary entries by user ID: error: column "visits" does not exist
+endodiary-app  |     at /app/node_modules/pg-pool/index.js:45:11
+endodiary-app  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+endodiary-app  |     at async <anonymous> (/app/node_modules/src/node-postgres/session.ts:104:19)
+endodiary-app  |     at async Storage.getDiaryEntriesByUserId (/app/server/storage.ts:100:14)
+endodiary-app  |     at async <anonymous> (/app/server/routes.ts:59:23) {
+endodiary-app  |   length: 107,
+endodiary-app  |   severity: 'ERROR',
+endodiary-app  |   code: '42703',
+endodiary-app  |   detail: undefined,
+endodiary-app  |   hint: undefined,
+endodiary-app  |   position: '165',
+endodiary-app  |   internalPosition: undefined,
+endodiary-app  |   internalQuery: undefined,
+endodiary-app  |   where: undefined,
+endodiary-app  |   schema: undefined,
+endodiary-app  |   table: undefined,
+endodiary-app  |   column: undefined,
+endodiary-app  |   dataType: undefined,
+endodiary-app  |   constraint: undefined,
+endodiary-app  |   file: 'parse_relation.c',
+endodiary-app  |   line: '3647',
+endodiary-app  |   routine: 'errorMissingColumn'
+endodiary-app  | }
+endodiary-app  | Error: Failed to fetch diary entries
+endodiary-app  |     at Storage.getDiaryEntriesByUserId (/app/server/storage.ts:107:13)
+endodiary-app  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+endodiary-app  |     at async <anonymous> (/app/server/routes.ts:59:23)
+endodiary-app  | error: column "visits" does not exist
+endodiary-app  |     at /app/node_modules/pg-pool/index.js:45:11
+endodiary-app  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+endodiary-app  |     at async <anonymous> (/app/node_modules/src/node-postgres/session.ts:104:19)
+endodiary-app  |     at async Storage.getDiaryEntryByUserAndDate (/app/server/storage.ts:57:21)
+endodiary-app  |     at async <anonymous> (/app/server/routes.ts:75:21)
+endodiary-app  | error: column "visits" does not exist
+endodiary-app  |     at /app/node_modules/pg-pool/index.js:45:11
+endodiary-app  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+endodiary-app  |     at async <anonymous> (/app/node_modules/src/node-postgres/session.ts:104:19)
+endodiary-app  |     at async Storage.getDiaryEntryByUserAndDate (/app/server/storage.ts:57:21)
+endodiary-app  |     at async <anonymous> (/app/server/routes.ts:75:21)
+endodiary-app  | Files in the public directory are served at the root path.
+endodiary-app  | Instead of /client/public/images/logo.png, use /images/logo.png.
+endodiary-app  | error: column "visits" does not exist
+endodiary-app  |     at /app/node_modules/pg-pool/index.js:45:11
+endodiary-app  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+endodiary-app  |     at async <anonymous> (/app/node_modules/src/node-postgres/session.ts:104:19)
+endodiary-app  |     at async Storage.getDiaryEntryByUserAndDate (/app/server/storage.ts:57:21)
+endodiary-app  |     at async <anonymous> (/app/server/routes.ts:75:21)
+endodiary-app  | error: column "visits" does not exist
+endodiary-app  |     at /app/node_modules/pg-pool/index.js:45:11
+endodiary-app  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+endodiary-app  |     at async <anonymous> (/app/node_modules/src/node-postgres/session.ts:104:19)
+endodiary-app  |     at async Storage.getDiaryEntryByUserAndDate (/app/server/storage.ts:57:21)
+endodiary-app  |     at async <anonymous> (/app/server/routes.ts:106:29)
