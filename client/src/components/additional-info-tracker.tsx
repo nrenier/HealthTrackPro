@@ -132,14 +132,14 @@ export default function AdditionalInfoTracker({
 
         const updatedVisits = [...visits, visit];
         setVisits(updatedVisits);
-        onVisitsChange(updatedVisits);
+        onChange?.({ visits: updatedVisits });
         setNewVisit({ type: '', date: '', report: null });
       };
 
       const removeVisit = (id: number) => {
         const updatedVisits = visits.filter(visit => visit.id !== id);
         setVisits(updatedVisits);
-        onVisitsChange(updatedVisits);
+        onChange?.({ visits: updatedVisits }););
       };
 
       const downloadReport = async (fileName: string) => {
