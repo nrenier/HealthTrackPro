@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useLocation } from "wouter";
 import { useAuth } from "@/hooks/use-auth";
+import { Logo } from "@/components/logo";
 
 interface ProfileHeaderProps {
   showBackButton?: boolean;
@@ -12,7 +13,7 @@ interface ProfileHeaderProps {
 export default function ProfileHeader({ showBackButton = false, title }: ProfileHeaderProps) {
   const [_, navigate] = useLocation();
   const { user } = useAuth();
-  
+
   const displayName = user?.displayName || user?.username || "User";
   // Get first letter of display name for avatar fallback
   const firstLetter = displayName.charAt(0).toUpperCase();
@@ -29,22 +30,20 @@ export default function ProfileHeader({ showBackButton = false, title }: Profile
           <ChevronLeft className="h-5 w-5" />
         </Button>
       ) : null}
-      
+
       {title ? (
         <div className="flex items-center justify-center flex-1">
-          <img 
-            src="/images/logo.png" 
-            alt="EndoDiary Logo" 
-            className="h-8 mr-2" 
+          <Logo 
+            size="medium" 
+            className="mr-2" 
           />
           <h1 className="text-lg font-semibold">{title}</h1>
         </div>
       ) : (
         <div className="flex items-center">
-          <img 
-            src="/images/logo.png" 
-            alt="EndoDiary Logo" 
-            className="h-8 mr-2" 
+          <Logo 
+            size="medium" 
+            className="mr-2" 
           />
           <Avatar className="h-8 w-8">
             <AvatarImage src="" />
@@ -56,7 +55,7 @@ export default function ProfileHeader({ showBackButton = false, title }: Profile
           </div>
         </div>
       )}
-      
+
       {!showBackButton && !title ? (
         <Button variant="ghost" size="icon" className="ml-auto">
           <Menu className="h-5 w-5" />

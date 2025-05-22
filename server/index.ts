@@ -1,4 +1,3 @@
-
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
@@ -56,6 +55,12 @@ app.use((req, res, next) => {
   } else {
     serveStatic(app);
   }
+
+  // Servi i file statici di React per il client
+  app.use(express.static(path.join(__dirname, "../client/dist")));
+  // Servi la cartella public per le immagini
+  app.use('/images', express.static(path.join(__dirname, "../public/images")));
+  app.use('/images', express.static(path.join(__dirname, "../client/public/images")));
 
   const PORT = process.env.PORT || 5000;
   const HOST = '0.0.0.0';

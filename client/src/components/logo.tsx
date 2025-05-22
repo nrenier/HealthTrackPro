@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 
 interface LogoProps {
   className?: string;
@@ -13,22 +13,36 @@ export default function Logo({ className = '', size = 'medium' }: LogoProps) {
     large: 'h-32'
   };
 
+  // Utilizziamo uno stato per gestire il percorso dell'immagine
+  const [imageSrc, setImageSrc] = useState('/images/logo.png');
+
   // Prova percorsi alternativi se l'immagine principale non si carica
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    const img = e.currentTarget;
-    if (img.src.endsWith('/images/logo.png')) {
-      img.src = '/client/public/images/logo.png';
-    } else if (img.src.endsWith('/client/public/images/logo.png')) {
-      img.src = '/logo.png'; // Ultimo tentativo
+  const handleImageError = () => {
+    if (imageSrc === '/images/logo.png') {
+      setImageSrc('/client/public/images/logo.png');
+    } else if (imageSrc === '/client/public/images/logo.png') {
+      setImageSrc('./images/logo.png');
+    } else if (imageSrc === './images/logo.png') {
+      setImageSrc('../images/logo.png');
+    } else if (imageSrc === '../images/logo.png') {
+      setImageSrc('/public/images/logo.png');
+    } else if (imageSrc === '/public/images/logo.png') {
+      // Ultimo tentativo - mostra un testo alternativo se tutte le opzioni falliscono
+      setImageSrc(''); // Imposta a vuoto per mostrare testo alternativo
     }
   };
 
-  return (
+  return imageSrc ? (
     <img 
-      src="/images/logo.png" 
+      src={imageSrc} 
       alt="EndoDiary Logo" 
       className={`${sizeClasses[size]} ${className}`}
       onError={handleImageError}
     />
+  ) : (
+    // Fallback quando nessuna immagine può essere caricata
+    <div className={`${sizeClasses[size]} ${className} bg-primary-100 flex items-center justify-center rounded-md`}>
+      <span className="font-semibold text-primary">EndoDiary</span>
+    </div>
   );
 }
