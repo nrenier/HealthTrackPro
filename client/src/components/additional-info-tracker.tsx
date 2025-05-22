@@ -47,7 +47,8 @@ export default function AdditionalInfoTracker({
   medicines,
   onPregnancyTestChange,
   onPhysicalActivitiesChange,
-  onMedicinesChange
+  onMedicinesChange,
+  onChange
 }: AdditionalInfoTrackerProps) {
   const [newMedicine, setNewMedicine] = useState<{ name: string; dosage: string }>({ name: '', dosage: '' });
   const [visits, setVisits] = useState<Array<{ id: number; type: string; date: string; reportUrl?: string }>>([]);
