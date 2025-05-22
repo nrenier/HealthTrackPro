@@ -9,8 +9,8 @@ RUN npm ci
 # Copia i sorgenti
 COPY . .
 
-# Crea la directory public/images se non esiste
-RUN mkdir -p public/images
+# Crea le directory necessarie
+RUN mkdir -p public/images uploads && chmod 777 uploads
 
 # Assicurati che il logo sia copiato nella directory public
 RUN cp -r client/public/images public/
