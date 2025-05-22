@@ -498,11 +498,12 @@ export default function AdditionalInfoTracker({
                       type="number"
                       placeholder="0"
                       value={waterIntake === undefined || waterIntake === null ? "" : waterIntake}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value;
                         onChange?.({
-                          waterIntake: e.target.value === "" ? undefined : parseFloat(e.target.value),
-                        })
-                      }
+                          waterIntake: value === "" ? undefined : isNaN(parseFloat(value)) ? undefined : parseFloat(value),
+                        });
+                      }}
                       className="w-24"
                     />
                     <span>/ 2,25 L</span>
@@ -520,11 +521,12 @@ export default function AdditionalInfoTracker({
                       step="0.1"
                       placeholder="Registra il tuo peso"
                       value={weight === undefined || weight === null ? "" : weight}
-                      onChange={(e) =>
-                        onChange?.({ 
-                          weight: e.target.value === "" ? undefined : parseFloat(e.target.value)
-                        })
-                      }
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        onChange?.({
+                          weight: value === "" ? undefined : isNaN(parseFloat(value)) ? undefined : parseFloat(value)
+                        });
+                      }}
                     />
                     <span>kg</span>
                   </div>
@@ -541,11 +543,12 @@ export default function AdditionalInfoTracker({
                       step="0.1"
                       placeholder="Registra la temperatura"
                       value={basalTemperature === undefined || basalTemperature === null ? "" : basalTemperature}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value;
                         onChange?.({
-                          basalTemperature: e.target.value === "" ? undefined : parseFloat(e.target.value),
-                        })
-                      }
+                          basalTemperature: value === "" ? undefined : isNaN(parseFloat(value)) ? undefined : parseFloat(value),
+                        });
+                      }}
                     />
                     <span>°C</span>
                   </div>
