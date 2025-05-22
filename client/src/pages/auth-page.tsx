@@ -108,10 +108,9 @@ export default function AuthPage() {
       <div className="container max-w-md mx-auto flex-1 flex flex-col items-center justify-center px-6 pt-12 pb-24">
         <div className="w-full">
           <div className="text-center mb-8">
-          <img 
-            src="/images/logo.png" 
-            alt="EndoDiary Logo" 
-            className="mx-auto w-32 h-auto mb-2" 
+          <Logo 
+            size="large"
+            className="mx-auto mb-2" 
           />
         </div>
 
