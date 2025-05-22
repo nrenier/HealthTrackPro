@@ -58,6 +58,7 @@ app.use((req, res, next) => {
   }
 
   // Servi i file statici di React per il client
+  const __dirname = new URL('.', import.meta.url).pathname;
   app.use(express.static(path.join(__dirname, "../client/dist")));
   // Servi la cartella public per le immagini
   app.use('/images', express.static(path.join(__dirname, "../public/images")));
