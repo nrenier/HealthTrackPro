@@ -500,8 +500,8 @@ export default function AdditionalInfoTracker({
                       value={waterIntake === undefined || waterIntake === null ? "" : waterIntake}
                       onChange={(e) => {
                         const value = e.target.value;
-                        const numValue = value === "" ? undefined : Number(value);
-                        if (!isNaN(numValue as number) || numValue === undefined) {
+                        if (value === "" || /^\d*\.?\d*$/.test(value)) {
+                          const numValue = value === "" ? undefined : parseFloat(value);
                           onChange?.({ waterIntake: numValue });
                         }
                       }}
@@ -524,8 +524,8 @@ export default function AdditionalInfoTracker({
                       value={weight === undefined || weight === null ? "" : weight}
                       onChange={(e) => {
                         const value = e.target.value;
-                        const numValue = value === "" ? undefined : Number(value);
-                        if (!isNaN(numValue as number) || numValue === undefined) {
+                        if (value === "" || /^\d*\.?\d*$/.test(value)) {
+                          const numValue = value === "" ? undefined : parseFloat(value);
                           onChange?.({ weight: numValue });
                         }
                       }}
@@ -547,8 +547,8 @@ export default function AdditionalInfoTracker({
                       value={basalTemperature === undefined || basalTemperature === null ? "" : basalTemperature}
                       onChange={(e) => {
                         const value = e.target.value;
-                        const numValue = value === "" ? undefined : Number(value);
-                        if (!isNaN(numValue as number) || numValue === undefined) {
+                        if (value === "" || /^\d*\.?\d*$/.test(value)) {
+                          const numValue = value === "" ? undefined : parseFloat(value);
                           onChange?.({ basalTemperature: numValue });
                         }
                       }}
