@@ -3,6 +3,14 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth } from "./auth";
 import { z } from "zod";
+import multer from "multer";
+import path from "path";
+import fs from "fs";
+
+const upload = multer({
+  dest: path.join(process.cwd(), 'uploads'),
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
+});
 import { 
   insertDiaryEntrySchema, 
   insertPainSymptomSchema, 
@@ -258,6 +266,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       next(error);
     }
+  });
+
+  // Upload report endpoint
+  app.post("/api/upload-report", isAuthenticated, upload.single('report'), async (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    const fileName = `${Date.now()}-${req.file.originalname}`;
+    const newPath = path.join(process.cwd(), 'uploads', fileName);
+    
+    fs.renameSync(req.file.path, newPath);
+    res.json({ fileName });
+  });
+
+  // Download report endpoint
+  app.get("/api/reports/:fileName", isAuthenticated, async (req, res) => {
+    const filePath = path.join(process.cwd(), 'uploads', req.params.fileName);
+    
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({ message: "Report not found" });
+    }
+
+    res.download(filePath);
   });
 
   app.put("/api/medical-info", isAuthenticated, async (req, res, next) => {

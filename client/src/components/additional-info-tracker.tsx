@@ -99,24 +99,66 @@ export default function AdditionalInfoTracker({
   };
 
       // Gestione Visite mediche
-      const addVisit = () => {
-        if (!newVisit.type || !newVisit.date) return;
-    
-        //uploadReport();
-    
+      const addVisit = async () => {
+        if (!newVisit.type) return;
+        
+        let reportFileName;
+        if (newVisit.report) {
+          const formData = new FormData();
+          formData.append('report', newVisit.report);
+          
+          try {
+            const res = await fetch('/api/upload-report', {
+              method: 'POST',
+              credentials: 'include',
+              body: formData
+            });
+            
+            if (!res.ok) throw new Error('Upload failed');
+            const data = await res.json();
+            reportFileName = data.fileName;
+          } catch (error) {
+            console.error('Error uploading report:', error);
+            return;
+          }
+        }
+
         const visit = {
-          id: Date.now().toString(),
+          id: Date.now(),
           type: newVisit.type,
-          date: newVisit.date,
-          reportUrl: newVisit.report ? URL.createObjectURL(newVisit.report) : undefined,
+          date: new Date().toISOString().split('T')[0],
+          reportFileName
         };
-    
-        setVisits([...visits, visit]);
+
+        const updatedVisits = [...visits, visit];
+        setVisits(updatedVisits);
+        onVisitsChange(updatedVisits);
         setNewVisit({ type: '', date: '', report: null });
       };
-    
-      const removeVisit = (id: string) => {
-        setVisits(visits.filter(visit => visit.id !== id));
+
+      const removeVisit = (id: number) => {
+        const updatedVisits = visits.filter(visit => visit.id !== id);
+        setVisits(updatedVisits);
+        onVisitsChange(updatedVisits);
+      };
+
+      const downloadReport = async (fileName: string) => {
+        try {
+          const res = await fetch(`/api/reports/${fileName}`, {
+            credentials: 'include'
+          });
+          
+          if (!res.ok) throw new Error('Download failed');
+          
+          const blob = await res.blob();
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = fileName;
+          a.click();
+        } catch (error) {
+          console.error('Error downloading report:', error);
+        }
       };
 
   return (

@@ -49,6 +49,13 @@ export const diaryEntries = pgTable("diary_entries", {
     name: string;
     dosage: string;
   }>>().default([]),
+
+  visits: jsonb("visits").$type<Array<{
+    id: number;
+    type: string;
+    date: string;
+    reportFileName?: string;
+  }>>().default([]),
   
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
