@@ -20,8 +20,8 @@ export default function BottomNavigation() {
           <Stethoscope />
         </button>
         <button 
-          className="p-3 text-muted-foreground"
-          onClick={() => {}}
+          className={`p-3 ${location.includes("/reports") ? "text-primary" : "text-muted-foreground"}`}
+          onClick={() => navigate("/reports")}
         >
           <BarChart />
         </button>
