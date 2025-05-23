@@ -41,6 +41,10 @@ export default function MedicalInfoPage() {
   // Stato per le informazioni mediche
   const [medicalInfo, setMedicalInfo] = useState<MedicalInfo>({
     userId: user?.id || 0,
+    birthDate: null,
+    menarcheAge: null,
+    smoking: false,
+    hormonalTherapy: null,
     endometriosisSurgery: false,
     appendectomy: false,
     infertility: false,
@@ -187,6 +191,54 @@ export default function MedicalInfoPage() {
           <div className="space-y-6">
             <Card>
               <CardHeader>
+                <CardTitle>Informazioni anagrafiche</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="birthDate">Data di nascita</Label>
+                  <Input
+                    id="birthDate"
+                    type="date"
+                    value={medicalInfo.birthDate || ''}
+                    onChange={(e) => setMedicalInfo(prev => ({...prev, birthDate: e.target.value}))}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="menarcheAge">Età del menarca</Label>
+                  <Input
+                    id="menarcheAge"
+                    type="number"
+                    min="0"
+                    max="30"
+                    value={medicalInfo.menarcheAge || ''}
+                    onChange={(e) => setMedicalInfo(prev => ({...prev, menarcheAge: parseInt(e.target.value) || null}))}
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="smoking">Fumo</Label>
+                  <div className="flex items-center space-x-2">
+                    <Label 
+                      htmlFor="smoking-si"
+                      className={`px-3 py-1 rounded-md cursor-pointer ${medicalInfo.smoking ? 'bg-primary/20 text-primary' : 'bg-neutral-100'}`}
+                      onClick={() => setMedicalInfo(prev => ({...prev, smoking: true}))}
+                    >
+                      Sì
+                    </Label>
+                    <Label 
+                      htmlFor="smoking-no"
+                      className={`px-3 py-1 rounded-md cursor-pointer ${!medicalInfo.smoking ? 'bg-primary/20 text-primary' : 'bg-neutral-100'}`}
+                      onClick={() => setMedicalInfo(prev => ({...prev, smoking: false}))}
+                    >
+                      No
+                    </Label>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
                 <CardTitle>Informazioni chirurgiche</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -237,6 +289,63 @@ export default function MedicalInfoPage() {
                 <CardTitle>Altre informazioni cliniche</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label>Terapia ormonale</Label>
+                  <RadioGroup
+                    value={medicalInfo.hormonalTherapy || ''}
+                    onValueChange={(value) => setMedicalInfo(prev => ({...prev, hormonalTherapy: value}))}
+                    className="space-y-2"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="estroprogestinic_pill" id="pill" />
+                      <Label htmlFor="pill">Pillola estroprogestinica</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="estroprogestinic_ring" id="ring" />
+                      <Label htmlFor="ring">Anello estroprogestinico</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="dienogest" id="dienogest" />
+                      <Label htmlFor="dienogest">Dienogest</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="desogestrel" id="desogestrel" />
+                      <Label htmlFor="desogestrel">Desogestrel</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="etonogestrel" id="etonogestrel" />
+                      <Label htmlFor="etonogestrel">Etonorgestrel (es. NEXPLANON)</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="drospirenone" id="drospirenone" />
+                      <Label htmlFor="drospirenone">Drospirenone</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="norethisterone_acetate" id="norethisterone" />
+                      <Label htmlFor="norethisterone">Noretisterone acetato</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="levonorgestrel_iud" id="iud" />
+                      <Label htmlFor="iud">IUD medicata al levonorgestrel</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="triptoreline" id="triptoreline" />
+                      <Label htmlFor="triptoreline">Triptoreline</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="leuprorelin" id="leuprorelin" />
+                      <Label htmlFor="leuprorelin">Peuprorelina</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="tibolone" id="tibolone" />
+                      <Label htmlFor="tibolone">Tibolone</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="other" id="other" />
+                      <Label htmlFor="other">Altro</Label>
+                    </div>
+                  </RadioGroup>
+                </div>
                 <div className="flex items-center justify-between">
                   <Label htmlFor="infertility">Infertilità</Label>
                   <div className="flex items-center space-x-2">

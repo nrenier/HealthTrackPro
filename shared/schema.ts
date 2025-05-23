@@ -64,9 +64,28 @@ export const diaryEntries = pgTable("diary_entries", {
 });
 
 // Tabella informazioni mediche
+export const hormonalTherapyEnum = pgEnum("hormonal_therapy", [
+  "estroprogestinic_pill",
+  "estroprogestinic_ring",
+  "dienogest",
+  "desogestrel",
+  "etonogestrel",
+  "drospirenone",
+  "norethisterone_acetate",
+  "levonorgestrel_iud",
+  "triptoreline",
+  "leuprorelin",
+  "tibolone",
+  "other"
+]);
+
 export const medicalInfo = pgTable("medical_info", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  birthDate: date("birth_date"),
+  menarcheAge: integer("menarche_age"),
+  smoking: boolean("smoking").default(false),
+  hormonalTherapy: hormonalTherapyEnum("hormonal_therapy"),
   endometriosisSurgery: boolean("endometriosis_surgery").default(false),
   appendectomy: boolean("appendectomy").default(false),
   infertility: boolean("infertility").default(false),
