@@ -12,6 +12,7 @@ import AuthPage from "@/pages/auth-page";
 import CalendarPage from "@/pages/calendar-page";
 import SymptomPage from "@/pages/symptom-page";
 import AccountPage from "@/pages/account-page";
+import ReportsPage from "./pages/reports-page";
 import NotFoundPage from "@/pages/not-found";
 import MedicalInfoPage from "@/pages/medical-info-page"; // Import MedicalInfoPage
 
@@ -46,6 +47,11 @@ export default function App() {
             <Route path="/account">
               <ProtectedRoute>
                 <AccountPage />
+              </ProtectedRoute>
+            </Route>
+            <Route path="/reports">
+              <ProtectedRoute>
+                <ReportsPage />
               </ProtectedRoute>
             </Route>
             <Route component={NotFoundPage} />
