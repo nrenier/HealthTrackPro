@@ -14,7 +14,6 @@ const painData = [
   { date: "Nov 27", value: 3 },
   { date: "Nov 28", value: 1 },
   { date: "Nov 29", value: 4 },
-  { date: "Nov 30", value: 2 },
 ];
 
 const measurementData = [
@@ -30,17 +29,16 @@ const measurementData = [
 const chartConfig = {
   pain: { theme: { light: "#FF7373", dark: "#FF7373" } },
   weight: { theme: { light: "#4C9AFF", dark: "#4C9AFF" } },
-  bmi: { theme: { light: "#00B8D9", dark: "#00B8D9" } },
   water: { theme: { light: "#36B37E", dark: "#36B37E" } },
   temperature: { theme: { light: "#FF8B00", dark: "#FF8B00" } },
 };
 
 export default function ReportsPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-background">
       <ProfileHeader title="Report" />
       
-      <div className="flex-1 p-4 pb-20">
+      <div className="container flex-1 p-4 pb-20 mx-auto max-w-xl">
         <Tabs defaultValue="pain" className="space-y-4">
           <TabsList className="w-full justify-start">
             <TabsTrigger value="pain">Dolore</TabsTrigger>
