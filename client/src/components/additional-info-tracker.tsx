@@ -182,6 +182,8 @@ export default function AdditionalInfoTracker({
     }
   };
 
+
+
   return (
     <div className="mb-6">
       <div className="space-y-4">
@@ -494,18 +496,18 @@ export default function AdditionalInfoTracker({
                 <div className="flex-1">
                   <Label>Acqua (L)</Label>
                   <div className="flex items-center gap-4">
-                    <Input
+                  <Input
                       type="number"
                       placeholder="0"
-                      value={waterIntake === undefined || waterIntake === null ? "" : waterIntake}
+                      value={typeof waterIntake === "number" ? waterIntake : ""}
                       onChange={(e) => {
                         const value = e.target.value;
-                        if (value === "" || /^\d*\.?\d*$/.test(value)) {
-                          const numValue = value === "" ? undefined : parseFloat(value);
-                          onChange?.({ waterIntake: numValue });
-                        }
+                        const numValue = value === "" ? undefined : Number(value);
+                        onChange?.({ waterIntake: numValue });
                       }}
                       className="w-24"
+                      min="0"
+                      step="0.1"
                     />
                     <span>/ 2,25 L</span>
                   </div>
@@ -524,11 +526,10 @@ export default function AdditionalInfoTracker({
                       value={weight === undefined || weight === null ? "" : weight}
                       onChange={(e) => {
                         const value = e.target.value;
-                        if (value === "" || /^\d*\.?\d*$/.test(value)) {
-                          const numValue = value === "" ? undefined : parseFloat(value);
-                          onChange?.({ weight: numValue });
-                        }
+                        const numValue = value === "" ? undefined : parseFloat(value);
+                        onChange?.({ weight: numValue });
                       }}
+                      min="0"
                     />
                     <span>kg</span>
                   </div>
@@ -547,11 +548,10 @@ export default function AdditionalInfoTracker({
                       value={basalTemperature === undefined || basalTemperature === null ? "" : basalTemperature}
                       onChange={(e) => {
                         const value = e.target.value;
-                        if (value === "" || /^\d*\.?\d*$/.test(value)) {
-                          const numValue = value === "" ? undefined : parseFloat(value);
-                          onChange?.({ basalTemperature: numValue });
-                        }
+                        const numValue = value === "" ? undefined : parseFloat(value);
+                        onChange?.({ basalTemperature: numValue });
                       }}
+                      min="0"
                     />
                     <span>°C</span>
                   </div>
