@@ -358,6 +358,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Aggiorna le informazioni mediche
       const updatedInfo = await storage.updateMedicalInfo(existingInfo.id, {
+        birthDate: req.body.birthDate !== undefined ? req.body.birthDate : existingInfo.birthDate,
+        menarcheAge: req.body.menarcheAge !== undefined ? req.body.menarcheAge : existingInfo.menarcheAge,
+        smoking: req.body.smoking !== undefined ? req.body.smoking : existingInfo.smoking,
+        hormonalTherapy: req.body.hormonalTherapy !== undefined ? req.body.hormonalTherapy : existingInfo.hormonalTherapy,
         endometriosisSurgery: req.body.endometriosisSurgery !== undefined ? req.body.endometriosisSurgery : existingInfo.endometriosisSurgery,
         appendectomy: req.body.appendectomy !== undefined ? req.body.appendectomy : existingInfo.appendectomy,
         infertility: req.body.infertility !== undefined ? req.body.infertility : existingInfo.infertility,
