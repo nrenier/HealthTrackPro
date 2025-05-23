@@ -164,7 +164,9 @@ export default function ReportsPage() {
         </div>
       </div>
 
-      <BottomNavigation />
+      <div className="container mx-auto max-w-xl">
+        <BottomNavigation />
+      </div>
     </div>
   );
 }
