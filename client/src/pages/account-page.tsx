@@ -79,7 +79,9 @@ export default function AccountPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <ProfileHeader title="Il mio account" showBackButton />
+      <div className="container max-w-md mx-auto">
+        <ProfileHeader title="Il mio account" showBackButton />
+      </div>
       
       <div className="flex-1 container max-w-md mx-auto p-4">
         <Card className="mb-6">
@@ -170,7 +172,9 @@ export default function AccountPage() {
         </div>
       </div>
 
-      <BottomNavigation />
+      <div className="container max-w-md mx-auto">
+        <BottomNavigation />
+      </div>
     </div>
   );
 }
