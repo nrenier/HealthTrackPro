@@ -7,23 +7,23 @@ import BottomNavigation from "@/components/bottom-navigation";
 import ProfileHeader from "@/components/profile-header";
 
 const painData = [
-  { date: "Nov 23", value: 3 },
-  { date: "Nov 24", value: 5 },
-  { date: "Nov 25", value: 2 },
-  { date: "Nov 26", value: 4 },
-  { date: "Nov 27", value: 3 },
-  { date: "Nov 28", value: 1 },
-  { date: "Nov 29", value: 4 },
+  { date: "Gen 10", value: 2 },
+  { date: "Gen 11", value: 4 },
+  { date: "Gen 12", value: 3 },
+  { date: "Gen 13", value: 5 },
+  { date: "Gen 14", value: 2 },
+  { date: "Gen 15", value: 1 },
+  { date: "Gen 16", value: 3 },
 ];
 
 const measurementData = [
-  { date: "Nov 23", weight: 65.2, bmi: 23.1, waterIntake: 2000, temperature: 36.5 },
-  { date: "Nov 24", weight: 65.3, bmi: 23.2, waterIntake: 2100, temperature: 36.7 },
-  { date: "Nov 25", weight: 65.1, bmi: 23.1, waterIntake: 1900, temperature: 36.4 },
-  { date: "Nov 26", weight: 65.4, bmi: 23.3, waterIntake: 2200, temperature: 36.8 },
-  { date: "Nov 27", weight: 65.2, bmi: 23.2, waterIntake: 2300, temperature: 36.6 },
-  { date: "Nov 28", weight: 65.5, bmi: 23.4, waterIntake: 2100, temperature: 36.5 },
-  { date: "Nov 29", weight: 65.3, bmi: 23.3, waterIntake: 2400, temperature: 36.9 },
+  { date: "Gen 10", weight: 55.2, waterIntake: 1800, temperature: 36.5 },
+  { date: "Gen 11", weight: 55.1, waterIntake: 2000, temperature: 36.6 },
+  { date: "Gen 12", weight: 55.3, waterIntake: 1900, temperature: 36.4 },
+  { date: "Gen 13", weight: 55.2, waterIntake: 2100, temperature: 36.7 },
+  { date: "Gen 14", weight: 55.4, waterIntake: 1950, temperature: 36.5 },
+  { date: "Gen 15", weight: 55.3, waterIntake: 2200, temperature: 36.6 },
+  { date: "Gen 16", weight: 55.2, waterIntake: 2000, temperature: 36.5 },
 ];
 
 const chartConfig = {
@@ -36,9 +36,10 @@ const chartConfig = {
 export default function ReportsPage() {
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <ProfileHeader title="Report" />
-      
-      <div className="container flex-1 p-4 pb-20 mx-auto max-w-xl">
+      <div className="container mx-auto max-w-xl">
+        <ProfileHeader title="Report" />
+        
+        <div className="flex-1 p-4 pb-20">
         <Tabs defaultValue="pain" className="space-y-4">
           <TabsList className="w-full justify-start">
             <TabsTrigger value="pain">Dolore</TabsTrigger>
